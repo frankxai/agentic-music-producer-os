@@ -1,0 +1,17 @@
+name: music-producer
+version: 0.1.0
+description: "Token-efficient Hermes music producer for original songs, guided meditations, Suno prompt engineering, taste review, and logged-in browser generation."
+hermes_requires: ">=0.18.0"
+author: FrankX
+distribution_owned:
+  - SOUL.md
+  - config.yaml
+  - skills
+  - scripts
+  - docs
+  - README.md
+  - AGENTS.md
+  - CLAUDE.md
+  - distribution.yaml
+
+env_requires: []

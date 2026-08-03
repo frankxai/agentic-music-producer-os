@@ -1,0 +1,34 @@
+# Credentials and user state
+.env
+.env.*
+!.env.EXAMPLE
+auth.json
+state.db*
+hermes_state.db
+response_store.db*
+sessions/
+memories/
+logs/
+plans/
+workspace/
+home/
+local/
+*_cache/
+
+# Generated production runs
+runs/
+
+# Python and test output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Hermes planning is local execution context
+.hermes/
