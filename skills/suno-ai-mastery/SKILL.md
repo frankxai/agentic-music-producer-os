@@ -7,6 +7,13 @@ tags: [suno, music-production, arrangement, vocals, prompting]
 
 # Suno AI Mastery
 
+## References
+
+Load on demand; do not read them for routine work.
+
+- `reference/genre-and-mood-lexicon.md` — attribute sets per genre family, mood → tempo/mode/dynamics mapping, emotional gradient ladders, fusion grammar, negative-space phrasing. Load when a brief names a vague genre or mood and needs translating into pocket, harmony, timbre, and production decisions.
+- `../suno-prompt-architect/reference/phonetic-control.md` — pronunciation and delivery control. Load whenever a lyric contains names, numbers, acronyms, or held notes.
+
 ## Freshness rule
 
 Suno changes quickly. Do not hardcode an old model as current. When operating the UI, capture it and select the newest stable model available to the logged-in account unless the user requests another. Treat exact character limits and feature names as UI facts to verify, not memory.

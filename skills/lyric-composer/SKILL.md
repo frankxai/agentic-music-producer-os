@@ -7,6 +7,14 @@ tags: [lyrics, songwriting, prosody, hooks, suno]
 
 # Lyric Composer
 
+## References
+
+Load on demand; do not read them for routine work.
+
+- `reference/rhyme-meter-prosody.md` — rhyme taxonomy and placement, scheme selection, scansion procedure, metrical feet, prosody mapping of emotion to melodic and harmonic stability, vowel and consonant behavior, and a diagnostic checklist. Load when a lyric scans badly, when rhyme sounds juvenile or lazy, or when a hook will not sit on the beat.
+- `../suno-prompt-architect/reference/phonetic-control.md` — apply before any lyric enters a Suno packet.
+- For rewrites onto an existing tune, meter, or melody, hand off to `song-adaptation` instead of drafting freely.
+
 ## Standard
 
 Write as a serious songwriter, not a rhyming text generator. The lyric must carry a distinct speaker, a scene, pressure, change, and a phrase worth singing twice.
