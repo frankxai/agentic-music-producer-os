@@ -116,7 +116,12 @@ volume, privacy, seed determinism, or headless pipeline integration — and only
 hardware feasibility check passes. The taste gate applies identically to both lanes; zero
 marginal cost is not a licence to skip review.
 
-For the hosted lane, load `suno-browser-operator`. Use the user's logged-in Chrome in the background. One Create action is the default. Verify the resulting two take cards, capture their actual Suno IDs/URLs, and record each:
+For the hosted lane, load `suno`. It classifies the request, selects and probes an execution
+backend (Chrome MCP, desktop computer use, a self-hosted Suno MCP, or hand-off), and delegates
+desktop execution to `suno-browser-operator`. Do not pick a backend here.
+
+After takes exist, load `song-postproduction` for authorized download, archival with provenance,
+objective measurement against the energy map, and transcription diffed against `lyrics.md`. Use the user's logged-in Chrome in the background. One Create action is the default. Verify the resulting two take cards, capture their actual Suno IDs/URLs, and record each:
 
 ```bash
 python ~/agentic-music-producer-os/scripts/session_cli.py record <session_dir> \
