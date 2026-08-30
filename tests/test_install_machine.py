@@ -364,10 +364,13 @@ class InstallMachineTests(unittest.TestCase):
             created = ensure_profile_driver_env(fresh, driver)
 
             self.assertEqual(created["status"], "created")
-            self.assertIn(
-                f"HERMES_CUA_DRIVER_CMD={driver.as_posix()}",
-                (fresh / ".env").read_text(encoding="utf-8"),
+            env_text = (fresh / ".env").read_text(encoding="utf-8")
+            written = next(
+                line.split("=", 1)[1]
+                for line in env_text.splitlines()
+                if line.startswith("HERMES_CUA_DRIVER_CMD=")
             )
+            self.assertTrue(os.path.samefile(written, driver))
 
             existing = root / "existing-profile"
             existing.mkdir()
