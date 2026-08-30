@@ -1,6 +1,6 @@
 # Agentic Music Producer OS
 
-A shareable Hermes profile and machine workflow for **original songs, guided meditations, Suno production packets, taste review, and verified browser generation**.
+A shareable Hermes profile and machine workflow for **original songs, score-first piano/orchestra works, guided meditations, Suno/Lyria packets, taste review, and verified generation**.
 
 This repository upgrades the original scaffold into a working profile-first system. It uses Frank's existing creator/music intelligence, but keeps runtime state local and the operating surface small:
 
@@ -13,7 +13,7 @@ Telegram brief → compose → taste gate → Suno Custom Mode → two verified 
 | Surface | Purpose |
 |---|---|
 | `music-producer` Hermes profile | Grok-first creative persona with authenticated OpenAI Codex fallback |
-| Seven portable skills | Orchestration, lyrics, meditation, Suno craft/prompting, taste, browser execution |
+| Eight portable skills | Orchestration, score-first composition, lyrics, meditation, Suno craft/prompting, taste, browser execution |
 | Default-gateway mirroring | Natural Telegram prompts can execute on this machine without a second bot |
 | Background Chrome control | Uses the operator's logged-in Suno session; never stores credentials |
 | Session CLI | Reviewable brief, lyrics, style, score, and verified generation URLs |
@@ -40,7 +40,7 @@ hermes computer-use doctor
 # Preview the exact local changes
 python scripts/install_machine.py --dry-run --install-profile
 
-# Install focused profile + mirror the seven skills into the default Telegram profile
+# Install focused profile + mirror the eight skills into the default Telegram profile
 python scripts/install_machine.py --install-profile --profile-name music-producer
 
 # Make the Telegram dependencies explicit instead of relying on platform defaults
@@ -134,7 +134,8 @@ The CLI enforces readiness and review thresholds, accepts only Suno `/song/<id>`
 
 | Skill | Loads when |
 |---|---|
-| `music-producer-os` | Compound song/meditation/production request |
+| `music-producer-os` | Compound song/score/meditation/production request |
+| `score-composer` | Piano/orchestra works, MusicXML, MIDI, sheets, tabs, Lyria |
 | `lyric-composer` | Lyrics, hooks, prosody, rewrites |
 | `guided-meditation-composer` | Guided practice or spoken wellness audio |
 | `suno-ai-mastery` | Arrangement, vocal persona, production, iteration |

@@ -17,6 +17,10 @@ local/
 
 # Generated production runs
 runs/
+catalog/**/build/
+*.preview.wav
+lyria-take.*
+lyria-receipt.json
 
 # Python and test output
 __pycache__/
