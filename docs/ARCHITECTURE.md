@@ -13,16 +13,19 @@ Telegram DM / Hermes Desktop / CLI
                 v
          music-producer-os            (thin orchestrator)
         /        |          \
-  composition  taste gate   Suno packet
-        \        |          /
-                v
-      logged-in Chrome + Suno         (computer_use, one Create action)
+  score-composer  taste     Suno / Lyria packets
+  catalog/*.txt
+        |
+        +-- MusicXML MIDI ABC piano-sheet guitar-tab
+        +-- live play / sample library / preview MP3
+        +-- Lyria 3 (Gemini, authorized)
+        +-- Suno (logged-in Chrome, one Create)
                 |
                 v
-      local run receipt + URLs        (scripts/session_cli.py)
+      local run receipt + verified files
 ```
 
-A dedicated `music-producer` profile is installed for focused Desktop/CLI sessions. Its gateway stays stopped. The same seven skills are mirrored into the default Hermes skill root so a natural-language Telegram DM can activate them without a second bot.
+A dedicated `music-producer` profile is installed for focused Desktop/CLI sessions. Its gateway stays stopped. The same eight skills are mirrored into the default Hermes skill root so a natural-language Telegram DM can activate them without a second bot.
 
 ## Why one gateway
 
@@ -36,10 +39,11 @@ Running the same Telegram bot token from two profile gateways creates competing 
 
 ### 1. Intent/router
 
-`skills/music-producer-os/SKILL.md` classifies song, instrumental, meditation, or experimental spoken-Suno work. It recovers context, opens one run, and loads only the needed specialist skills.
+`skills/music-producer-os/SKILL.md` classifies score, song, instrumental, meditation, or experimental spoken-Suno work. It recovers context, opens one run, and loads only the needed specialist skills.
 
 ### 2. Craft specialists
 
+- `score-composer`: compact DSL, MusicXML/MIDI/ABC/sheets/tabs, Lyria/Suno bridges.
 - `lyric-composer`: premise, image system, hook, prosody, section mechanics.
 - `guided-meditation-composer`: trauma-sensitive spoken pacing and speech-safe music beds.
 - `suno-ai-mastery`: rhythm, harmony, timbre, vocal persona, dynamics, production.

@@ -1,0 +1,43 @@
+@title Window Latch
+@composer Frank / Agentic Composer OS
+@kind piano
+@key D minor
+@time 4/4
+@tempo 68
+@thesis A door that almost closes: the speaker can finally leave the latch unclicked.
+@motif descending A-F-D, then the inversion D-F-A
+@form 16-bar miniature: expose 1-4, widen 5-8, invert 9-12, leave unlatched 13-16
+
+[Piano]
+1 RH: A4q F4q D4h
+1 LH: D3h A2h
+2 RH: A4q G4q F4q E4q
+2 LH: D3q C3q Bb2h
+3 RH: F4q A4q D5h
+3 LH: D3h A2h
+4 RH: C5q Bb4q A4h
+4 LH: E3h A2h
+5 RH: Bb4q G4q E4h
+5 LH: C3h G2h
+6 RH: A4q F4q D4h
+6 LH: D3h A2h
+7 RH: [D5A4]q [C5G4]q [Bb4F4]h
+7 LH: Bb2q F3q D3h
+8 RH: A4q C5q F5h
+8 LH: F3h C3h
+9 RH: D4q F4q A4h
+9 LH: D3h A2h
+10 RH: F4q A4q D5q F5q
+10 LH: D3q F3q A3h
+11 RH: G5q F5q E5q D5q
+11 LH: Bb2h F3h
+12 RH: A5h F5q D5q
+12 LH: D3h A2h
+13 RH: A4h rq F4q
+13 LH: D3w
+14 RH: D4h A4q rq
+14 LH: A2h D3h
+15 RH: A4q F4q D4q rq
+15 LH: D3h A2q rq
+16 RH: A4w
+16 LH: A2h E3h

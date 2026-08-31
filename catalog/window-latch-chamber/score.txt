@@ -1,0 +1,49 @@
+@title Window Latch Chamber Study
+@composer Frank / Agentic Composer OS
+@kind chamber
+@key D minor
+@time 4/4
+@tempo 68
+@thesis The latch motif spoken by four bodies: violin asks, cello decides not to close.
+@motif A-F-D passed from violin I to cello, then left hanging on A
+@form 8-bar study: unison cell, split thirds, inversion, dominant hang
+
+[Violin I]
+1 P: A5q F5q D5h
+2 P: A5q G5q F5q E5q
+3 P: F5q A5q D6h
+4 P: C6q Bb5q A5h
+5 P: D5q F5q A5h
+6 P: F5q A5q D6q F6q
+7 P: A6h F6q D6q
+8 P: A5w
+
+[Violin II]
+1 P: F5q D5q A4h
+2 P: F5q E5q D5q C5q
+3 P: D5q F5q A5h
+4 P: A5q G5q E5h
+5 P: A4q D5q F5h
+6 P: D5q F5q A5q D6q
+7 P: F6h D6q A5q
+8 P: E5w
+
+[Viola]
+1 P: D4h A3h
+2 P: D4q C4q Bb3h
+3 P: D4h A3h
+4 P: E4h A3h
+5 P: D4h A3h
+6 P: D4q F4q A4h
+7 P: Bb3h F4h
+8 P: A3w
+
+[Cello]
+1 P: D3h A2h
+2 P: D3q C3q Bb2h
+3 P: D3h A2h
+4 P: E3h A2h
+5 P: D3h A2h
+6 P: D3q F3q A3h
+7 P: Bb2h D3h
+8 P: A2w

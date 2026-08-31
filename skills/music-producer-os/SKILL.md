@@ -1,6 +1,6 @@
 ---
 name: music-producer-os
-description: Orchestrate an original song, instrumental, or guided meditation from brief through craft, Suno packet, taste review, logged-in browser generation, and durable receipt. Use for "make a song", "produce this", "create in Suno", "guided meditation", and compound music requests.
+description: Orchestrate original songs, score-first piano/orchestra works, instrumentals, or guided meditations from brief through craft, notation, Suno/Lyria packets, taste review, and verified generation. Use for "make a song", "compose piano", "orchestra", "sheets/tabs", "produce this", "create in Suno", "Lyria", "guided meditation".
 version: 0.1.0
 tags: [music, production, suno, songwriting, meditation, orchestration]
 ---
@@ -32,10 +32,13 @@ Activate when the user asks to:
 Use the user's message, current session, `session_search`, and accessible local knowledge. Ask only for a missing fact that materially changes the work. Otherwise make an explicit artistic assumption and move.
 
 Classify:
+- `score`: piano, chamber, orchestra, or guitar works that must exist as notation;
 - `song`: sung lyrics and full production;
 - `instrumental`: no vocal text required;
 - `meditation`: preferred lane is spoken script + separate instrumental bed;
 - `spoken-suno`: experimental spoken-word performance inside Suno.
+
+If the user wants sheets, tabs, orchestra, piano works, volume of actual compositions, Lyria plus Suno, or live playing, load `score-composer` first. The score is the canon.
 
 ### 2. Open a durable run
 
@@ -70,10 +73,12 @@ Write these decisions into `brief.md`:
 
 ### 4. Compose with the relevant specialist
 
+- Piano/orchestra/sheets/tabs: load `score-composer` and compile `catalog/<slug>/score.txt` before any audio lane.
 - Song lyrics: load `lyric-composer`.
 - Guided meditation: load `guided-meditation-composer`.
 - Instrumental/song production direction: load `suno-ai-mastery`.
 - Suno fields: load `suno-prompt-architect`.
+- Lyria 3: compile the score, then `scripts/lyria_cli.py`. Do not generate without an explicit request and a process-level Gemini key.
 
 Do one strong full draft. Use a second alternate only for the hook, title, or sonic thesis when a real decision remains.
 
