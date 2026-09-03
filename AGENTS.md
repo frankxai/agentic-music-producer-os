@@ -33,3 +33,7 @@ After machine install:
 hermes profile show music-producer
 hermes -p music-producer skills list
 ```
+
+## Rights and commercial release
+
+Read product.manifest.yaml and docs/RIGHTS-RELEASE-MONETIZATION.md before packaging or release work. Generation, download, listening, technical QA, rights clearance, distribution and publication are separate gates. Follow docs/media/media-policy.md. Never infer composition/master ownership, voice consent, sample clearance, splits, distributor acceptance, release status, plays or revenue. Public submission, license terms, price, spend and wallet/platform actions require explicit authorization.

@@ -1,0 +1,24 @@
+schema_version: "1.0.0"
+product_id: product_music_producer_os
+sku_id: sku_music_producer_os_v1
+name: Agentic Music Producer OS
+brand_id: brand_starlight_intelligence
+repository: frankxai/agentic-music-producer-os
+status: machine_ready_distribution
+format: profile_skill_pack_and_production_system
+buyer:
+  segment: original_music_creators_and_creative_teams
+  job: move_from_brief_to_reviewed_original_music_packet_and_verified_generation_without_losing_rights_or_provenance
+promise:
+  outcome: repeatable_original_music_production_with_taste_gates_and_durable_receipts
+  boundary: generation_does_not_authorize_download_publication_distribution_or_commercial_rights
+activation_event: first_validated_session_with_real_listening_receipt
+commercial:
+  price_state: decision_required
+  models: [open_capability, creator_pack, music_asset_license, updates, premium_direction]
+rights:
+  state: work_level_review_required
+channels: [github, owned_storefront, bandcamp_for_releases, beatstars_for_licensed_kits, dsp_via_distributor]
+maintenance:
+  cadence: monthly_and_on_provider_or_rights_policy_change
+stop_rule: no_release_or_license_without_complete_composition_master_voice_sample_and_split_record
