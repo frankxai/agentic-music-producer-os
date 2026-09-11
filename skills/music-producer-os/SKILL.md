@@ -16,6 +16,8 @@ Activate when the user asks to:
 - turn an idea, poem, voice note, passage, or emotional state into music;
 - create a guided meditation or spoken-word music piece;
 - build Suno prompts or generate the result in the logged-in Suno account;
+- rewrite an existing song onto its own tune — parody, contrafact, translation, or catalog revision;
+- generate locally with open-weight models instead of Suno;
 - review or improve a draft before spending more Suno credits.
 
 ## Autonomy and credit policy
@@ -75,6 +77,7 @@ Write these decisions into `brief.md`:
 
 - Piano/orchestra/sheets/tabs: load `score-composer` and compile `catalog/<slug>/score.txt` before any audio lane.
 - Song lyrics: load `lyric-composer`.
+- Rewrite onto an existing tune, meter, or melody — parody, contrafact, translation, or a revision of the operator's own catalog: load `song-adaptation` **before** `lyric-composer`. It classifies the rights case and maps the metrical skeleton; drafting first wastes the draft.
 - Guided meditation: load `guided-meditation-composer`.
 - Instrumental/song production direction: load `suno-ai-mastery`.
 - Suno fields: load `suno-prompt-architect`.
@@ -113,7 +116,17 @@ Do not open Suno until `ready_for_suno` is true.
 
 ### 7. Generate only when requested
 
-Load `suno-browser-operator`. Use the user's logged-in Chrome in the background. One Create action is the default. Verify the resulting two take cards, capture their actual Suno IDs/URLs, and record each:
+Hosted Suno is the default lane. Switch to `local-music-generation` only when the brief needs
+volume, privacy, seed determinism, or headless pipeline integration — and only after its
+hardware feasibility check passes. The taste gate applies identically to both lanes; zero
+marginal cost is not a licence to skip review.
+
+For the hosted lane, load `suno`. It classifies the request, selects and probes an execution
+backend (Chrome MCP, desktop computer use, a self-hosted Suno MCP, or hand-off), and delegates
+desktop execution to `suno-browser-operator`. Do not pick a backend here.
+
+After takes exist, load `song-postproduction` for authorized download, archival with provenance,
+objective measurement against the energy map, and transcription diffed against `lyrics.md`. Use the user's logged-in Chrome in the background. One Create action is the default. Verify the resulting two take cards, capture their actual Suno IDs/URLs, and record each:
 
 ```bash
 python ~/agentic-music-producer-os/scripts/session_cli.py record <session_dir> \

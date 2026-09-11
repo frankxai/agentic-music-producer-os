@@ -7,6 +7,14 @@ tags: [suno, prompts, custom-mode, song-structure]
 
 # Suno Prompt Architect
 
+## References
+
+Load on demand; do not read them for routine work.
+
+- `reference/phonetic-control.md` — respelling, numbers and acronyms, delivery notation, held-vowel selection, consonant load, and the test-before-spend protocol. Load before writing the PRONUNCIATION NOTES block on any packet containing names, numbers, coinages, or multilingual lines.
+- `reference/tag-lexicon.md` — the full structural, performance, dynamic, and instrumentation tag vocabulary, with the density budget that keeps tags effective. Load when a section needs a cue you cannot name, or when tag density is suspected of flattening the arrangement.
+- `../suno-ai-mastery/reference/genre-and-mood-lexicon.md` — attribute vocabulary for the STYLE field.
+
 ## Input requirement
 
 Do not prompt from a vague mood alone when the full workflow is requested. First establish:
