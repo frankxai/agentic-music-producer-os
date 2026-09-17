@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "0.1.0",
+  "assetId": "ast_018f2ac0-7a10-7abc-8def-0123456789ab",
+  "projectId": "prj_018f2ac0-7a10-7abc-8def-0123456789ac",
+  "recordingSessionId": "ses_018f2ac0-7a10-7abc-8def-0123456789ad",
+  "kind": "voice_memo",
+  "status": "needs_review",
+  "title": "Example private voice memo",
+  "capturedAt": "2026-08-05T09:32:10Z",
+  "ingestedAt": "2026-08-05T09:34:00Z",
+  "privacyClass": "protected_local",
+  "createdBy": {
+    "type": "human",
+    "id": "operator:owner",
+    "displayName": "Owner"
+  },
+  "source": {
+    "originalFileName": "20260805_093210-example-voice-memo.wav",
+    "captureApplication": "DAW",
+    "captureApplicationVersion": "recorded-at-runtime",
+    "equipmentProfileId": "eqp_018f2ac0-7a10-7abc-8def-0123456789ae",
+    "mimeType": "audio/wav",
+    "container": "wav",
+    "codec": "pcm_s24le",
+    "sampleRateHz": 48000,
+    "bitDepth": 24,
+    "channels": 1,
+    "durationMs": 42750
+  },
+  "blobs": [
+    {
+      "blobId": "blb_018f2ac0-7a10-7abc-8def-0123456789af",
+      "role": "original",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "bytes": 6156044,
+      "mimeType": "audio/wav",
+      "createdAt": "2026-08-05T09:32:10Z",
+      "rebuildable": false,
+      "replicas": [
+        {
+          "replicaId": "rep_018f2ac0-7a10-7abc-8def-0123456789b0",
+          "tier": "hot_local",
+          "provider": "local-ntfs",
+          "uri": "media-vault://hot/blobs/sha256/aa/aa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "observedAt": "2026-08-05T09:34:00Z",
+          "verification": "hash_checked"
+        }
+      ]
+    },
+    {
+      "blobId": "blb_018f2ac0-7a10-7abc-8def-0123456789b1",
+      "role": "transcript",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "bytes": 18422,
+      "mimeType": "application/json",
+      "createdAt": "2026-08-05T09:35:30Z",
+      "rebuildable": true,
+      "replicas": [
+        {
+          "replicaId": "rep_018f2ac0-7a10-7abc-8def-0123456789b2",
+          "tier": "hot_local",
+          "provider": "local-ntfs",
+          "uri": "media-vault://hot/blobs/sha256/bb/bb/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "observedAt": "2026-08-05T09:35:30Z",
+          "verification": "hash_checked"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "subjectId": "blb_018f2ac0-7a10-7abc-8def-0123456789b1",
+      "predicate": "transcribes",
+      "objectId": "blb_018f2ac0-7a10-7abc-8def-0123456789af",
+      "processingRunId": "run_018f2ac0-7a10-7abc-8def-0123456789b3"
+    }
+  ],
+  "transcripts": [
+    {
+      "transcriptAssetId": "ast_018f2ac0-7a10-7abc-8def-0123456789b4",
+      "sourceBlobId": "blb_018f2ac0-7a10-7abc-8def-0123456789af",
+      "language": "en",
+      "engine": "faster-whisper",
+      "model": "model-recorded-at-runtime",
+      "runtimeVersion": "recorded-at-runtime",
+      "format": "json",
+      "wordTimestamps": true,
+      "diarization": false,
+      "reviewState": "needs_review"
+    }
+  ],
+  "qualityMeasurements": [
+    {
+      "measurementId": "qcm_018f2ac0-7a10-7abc-8def-0123456789b5",
+      "blobId": "blb_018f2ac0-7a10-7abc-8def-0123456789af",
+      "profile": "capture-voice-raw-v1",
+      "metric": "sample_rate_hz",
+      "value": 48000,
+      "unit": "Hz",
+      "method": "stream probe",
+      "tool": "ffprobe",
+      "toolVersion": "recorded-at-runtime",
+      "measuredAt": "2026-08-05T09:34:15Z",
+      "gate": "pass"
+    }
+  ],
+  "listeningReviews": [],
+  "processingRuns": [
+    {
+      "runId": "run_018f2ac0-7a10-7abc-8def-0123456789b3",
+      "operation": "transcribe",
+      "tool": "faster-whisper",
+      "toolVersion": "recorded-at-runtime",
+      "provider": "local",
+      "model": "model-recorded-at-runtime",
+      "parameterSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "inputBlobIds": [
+        "blb_018f2ac0-7a10-7abc-8def-0123456789af"
+      ],
+      "outputBlobIds": [
+        "blb_018f2ac0-7a10-7abc-8def-0123456789b1"
+      ],
+      "startedAt": "2026-08-05T09:34:30Z",
+      "completedAt": "2026-08-05T09:35:30Z",
+      "actor": {
+        "type": "tool",
+        "id": "media-vault:transcription-worker"
+      },
+      "receiptSha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+  ],
+  "rights": {
+    "consentState": "not_applicable",
+    "voiceRights": "self",
+    "inputRights": "owned",
+    "aiRole": "transcription",
+    "releaseAuthority": "private_only",
+    "retentionPolicy": "protected-owner-recording-v1",
+    "deletionHold": true
+  },
+  "provenance": {
+    "eventLogHeadSha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "integrityState": "local_hash_chain"
+  },
+  "tags": ["voice-memo", "example"],
+  "collections": [],
+  "recordVersion": 1,
+  "updatedAt": "2026-08-05T09:35:30Z"
+}

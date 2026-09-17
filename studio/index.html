@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Music Producer OS — Studio Dashboard</title>
+  <!-- Google Fonts: Syne, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <div class="studio-container">
+    
+    <!-- Top Navigation & Global Hardware Strip -->
+    <header class="studio-header">
+      <div class="brand-cluster">
+        <div class="brand-badge">FX-OS</div>
+        <div class="brand-text">
+          <h1 class="brand-title">MUSIC PRODUCER OS</h1>
+          <span class="brand-subtitle">FrankX Intelligence • 10-Agent Production House</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="studio-nav">
+        <button class="nav-btn active" data-tab="orchestrator">Album Planner</button>
+        <button class="nav-btn" data-tab="prompt-studio">Lyric & Prompt Studio</button>
+        <button class="nav-btn" data-tab="critic-deck">2-Pass Critic Deck</button>
+        <button class="nav-btn" data-tab="visual-studio">Cover & Canvas Studio</button>
+        <button class="nav-btn" data-tab="distrokid-hub">DistroKid Release Ops</button>
+        <button class="nav-btn" data-tab="encyclopedia">Encyclopedia</button>
+      </nav>
+
+      <!-- System Status Indicators -->
+      <div class="system-status">
+        <div class="status-chip active-chip">
+          <span class="dot live-dot"></span>
+          <span class="label">Suno CUA Ready</span>
+        </div>
+        <div class="status-chip">
+          <span class="label">One-Create Gate: <strong>ACTIVE</strong></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Studio Workspace -->
+    <main class="studio-main">
+      
+      <!-- TAB 1: ALBUM & RELEASE ORCHESTRATOR -->
+      <section id="tab-orchestrator" class="tab-pane active">
+        <div class="pane-header">
+          <div>
+            <h2 class="pane-title">Album & Release Orchestrator</h2>
+            <p class="pane-desc">Manage track graphs, Camelot key progression, voice persona assignments, and Create budgets.</p>
+          </div>
+          <div class="pane-actions">
+            <button class="btn btn-secondary" id="btn-export-album-json">Export Album Manifest</button>
+            <button class="btn btn-primary" id="btn-add-track">+ Add Track</button>
+          </div>
+        </div>
+
+        <!-- Album Metadata Card -->
+        <div class="album-summary-card">
+          <div class="album-meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">Album Title</span>
+              <input type="text" id="album-title-input" class="studio-input text-bold" value="Light Between the Waves">
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Primary Artist</span>
+              <input type="text" id="album-artist-input" class="studio-input" value="FrankX">
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Target Release</span>
+              <input type="date" id="album-date-input" class="studio-input" value="2026-10-15">
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Distributor</span>
+              <div class="meta-val highlight-val">DistroKid (Verified)</div>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Create Budget</span>
+              <div class="meta-val">4 / 10 Used <span class="badge-mini">Strict 1-Create</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tracklist Table -->
+        <div class="table-card">
+          <table class="track-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Track Title</th>
+                <th>Key / Camelot</th>
+                <th>BPM</th>
+                <th>Voice Persona</th>
+                <th>Critic Score</th>
+                <th>Mix / Master</th>
+                <th>Visuals</th>
+                <th>Release Ready</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tracklist-tbody">
+              <!-- Dynamically rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 2: LYRIC & PROMPT STUDIO -->
+      <section id="tab-prompt-studio" class="tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2 class="pane-title">Suno Custom Mode Studio</h2>
+            <p class="pane-desc">Craft structured lyrics with verified metatags, prosody alignment, and negative exclusions.</p>
+          </div>
+          <div class="pane-actions">
+            <button class="btn btn-secondary" id="btn-load-sample-lyrics">Load Art-Pop Template</button>
+            <button class="btn btn-primary" id="btn-copy-suno-packet">Copy Suno Custom Packet</button>
+          </div>
+        </div>
+
+        <div class="two-col-grid">
+          <!-- Left Col: Prompt & Style Controls -->
+          <div class="studio-card">
+            <h3 class="card-title">1. Style of Music & Exclusions</h3>
+            
+            <div class="form-group">
+              <label class="form-label">Genre Preset</label>
+              <select id="genre-preset-select" class="studio-select">
+                <option value="art_pop">Intimate Art-Pop (Rhodes, Analog Synths, 118 BPM)</option>
+                <option value="neo_soul">Neo-Soul Groove (Vintage Electric Piano, Pocket Drums, 82 BPM)</option>
+                <option value="melodic_techno">Melodic Techno (Rolling Bassline, Hypnotic Plucks, 124 BPM)</option>
+                <option value="ambient_meditation">Ambient Meditation (Warm Sub Drone, Singing Bowls, 60 BPM)</option>
+                <option value="liquid_dnb">Liquid Drum & Bass (Breakbeat, Sub Slides, 174 BPM)</option>
+                <option value="cinematic_orchestral">Epic Cinematic (Strings, Brass Swell, 90 BPM)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Style Prompt (Max 200 chars)</label>
+              <textarea id="style-prompt-input" class="studio-textarea short-area" rows="3"></textarea>
+              <div class="char-counter"><span id="style-char-count">0</span> / 200</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Negative Exclusions</label>
+              <input type="text" id="exclusions-input" class="studio-input" placeholder="e.g. aggressive metal, EDM drops, autotune">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Quick-Insert Metatags</label>
+              <div class="tag-pill-container" id="metatags-quick-pills">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Col: Structured Lyrics Editor -->
+          <div class="studio-card">
+            <div class="card-header-flex">
+              <h3 class="card-title">2. Structured Lyrics with Metatags</h3>
+              <div class="syllable-indicator">Total Lines: <span id="lyric-line-count">0</span></div>
+            </div>
+
+            <div class="form-group">
+              <textarea id="lyrics-editor" class="studio-textarea code-font tall-area" rows="18" placeholder="Paste or write lyrics with [Verse], [Chorus], [Bridge], [Outro]..."></textarea>
+            </div>
+
+            <div class="editor-footer">
+              <span class="hint-text">💡 Tip: Capitalize words on strong downbeats to guide vocal stress.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: 2-PASS CRITIC DECK -->
+      <section id="tab-critic-deck" class="tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2 class="pane-title">Producer Mind — 2-Pass Critic Deck</h2>
+            <p class="pane-desc">Fresh-ears isolated listening gate. Pass 1 (Somatic/Gut) before Pass 2 (Analytic). Minimum 8.5/10 required to pass.</p>
+          </div>
+          <div class="pane-actions">
+            <div class="score-display-pill" id="composite-score-badge">
+              Score: <span class="score-num" id="current-critic-score">8.8</span> / 10 <span class="pass-tag">PASS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="critic-grid">
+          <!-- Somatic Pass Card -->
+          <div class="studio-card">
+            <h3 class="card-title">Pass 1: Somatic (Gut & Groove)</h3>
+            <p class="card-desc">Does it move the body? Does the chorus create genuine emotional goosebumps?</p>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Immediate Groove / Head-Nod</span>
+                <span class="slider-val" id="val-groove">9.0</span>
+              </div>
+              <input type="range" class="studio-slider" id="slider-groove" min="1" max="10" step="0.1" value="9.0">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Emotional Contract / Goosebump Factor</span>
+                <span class="slider-val" id="val-emotion">8.7</span>
+              </div>
+              <input type="range" class="studio-slider" id="slider-emotion" min="1" max="10" step="0.1" value="8.7">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Vocal Intimacy & Believability</span>
+                <span class="slider-val" id="val-vocal">8.9</span>
+              </div>
+              <input type="range" class="studio-slider" id="slider-vocal" min="1" max="10" step="0.1" value="8.9">
+            </div>
+          </div>
+
+          <!-- Analytic Pass Card -->
+          <div class="studio-card">
+            <h3 class="card-title">Pass 2: Analytic (Craft & Mix)</h3>
+            <p class="card-desc">Lyric prosody, section contrast, frequency separation, subtractive clarity.</p>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Lyric Prosody & Syllable Stress</span>
+                <span class="slider-val" id="val-prosody">8.6</span>
+              </div>
+              <input type="range" class="studio-slider" id="slider-prosody" min="1" max="10" step="0.1" value="8.6">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Section Contrast (Chorus Lift)</span>
+                <span class="slider-val" id="val-contrast">8.8</span>
+              </div>
+              <input type="range" class="studio-slider" id="slider-contrast" min="1" max="10" step="0.1" value="8.8">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Mix Clarity & 2-Bus Cleanliness</span>
+                <span class="slider-val" id="val-mix">8.8</span>
+              </div>
+              <input type="range" class="studio-slider" id="slider-mix" min="1" max="10" step="0.1" value="8.8">
+            </div>
+          </div>
+
+          <!-- Subtractive Interventions Card -->
+          <div class="studio-card span-full">
+            <h3 class="card-title">Subtractive Action Directives (Remove Before Add)</h3>
+            <div class="action-box">
+              <ul class="clean-list" id="subtractive-notes">
+                <li>✅ <strong>Verse 2:</strong> Mute secondary electric piano to let lead vocal breathe.</li>
+                <li>✅ <strong>Pre-Chorus:</strong> High-pass filter synths at 250Hz right before the drop to make the chorus bass hit 3dB wider.</li>
+                <li>✅ <strong>Outro:</strong> Fade rhythm track 8 bars earlier; leave only Rhodes and vocal decay.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: COVER & CANVAS STUDIO -->
+      <section id="tab-visual-studio" class="tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2 class="pane-title">Visual Art & Spotify Canvas Studio</h2>
+            <p class="pane-desc">Generate 3000x3000px DistroKid-compliant master cover art and 9:16 looping motion canvases.</p>
+          </div>
+          <div class="pane-actions">
+            <button class="btn btn-secondary" id="btn-randomize-art">Generate Variant</button>
+            <button class="btn btn-primary" id="btn-download-art">Download 3000x3000px Package</button>
+          </div>
+        </div>
+
+        <div class="two-col-grid">
+          <!-- Cover Art Visualizer -->
+          <div class="studio-card">
+            <h3 class="card-title">1. Master Album Cover (3000 x 3000 px)</h3>
+            <div class="cover-art-container">
+              <canvas id="cover-canvas" width="600" height="600"></canvas>
+            </div>
+            <div class="art-controls">
+              <div class="form-group">
+                <label class="form-label">Art Style Archetype</label>
+                <select id="art-archetype-select" class="studio-select">
+                  <option value="neural_cosmos">Neural Cosmos / Obsidian & Gold</option>
+                  <option value="deep_ocean">Abyssal Ocean & Luminescent Waves</option>
+                  <option value="minimalist_monolith">Architectural Monolith & Light Beam</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spotify Canvas 9:16 Visualizer -->
+          <div class="studio-card">
+            <h3 class="card-title">2. Spotify Canvas (1080 x 1920 px • 9:16)</h3>
+            <div class="canvas-9-16-container">
+              <div class="canvas-phone-mockup">
+                <canvas id="motion-canvas" width="270" height="480"></canvas>
+                <div class="mockup-overlay">
+                  <span class="mockup-tag">Spotify Canvas Preview</span>
+                </div>
+              </div>
+            </div>
+            <div class="canvas-specs-info">
+              <span>Duration: <strong>5.0s seamless loop</strong></span>
+              <span>Format: <strong>MP4 / 60 FPS</strong></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: DISTROKID RELEASE HUB -->
+      <section id="tab-distrokid-hub" class="tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2 class="pane-title">DistroKid Release Ops & Pre-Flight Gate</h2>
+            <p class="pane-desc">Automated validation engine for audio, cover art, metadata, and DDEX AI credits disclosures.</p>
+          </div>
+          <div class="pane-actions">
+            <button class="btn btn-primary" id="btn-stage-distrokid">Assemble Release Manifest</button>
+          </div>
+        </div>
+
+        <div class="distrokid-grid">
+          <!-- Gate Verification Checklist -->
+          <div class="studio-card">
+            <h3 class="card-title">Pre-Flight Verification Checklist</h3>
+            <div class="checklist" id="distrokid-checklist">
+              <div class="check-item passed">
+                <span class="check-icon">✓</span>
+                <div class="check-content">
+                  <strong>Integrated Loudness (-14.0 LUFS)</strong>
+                  <p>Target: -14.0 LUFS ± 1.0. Current Master: <code>-14.1 LUFS</code> (Optimal).</p>
+                </div>
+              </div>
+              <div class="check-item passed">
+                <span class="check-icon">✓</span>
+                <div class="check-content">
+                  <strong>Maximum True Peak (-1.0 dBTP)</strong>
+                  <p>Measured: <code>-1.02 dBTP</code> (Zero lossy codec clipping risk).</p>
+                </div>
+              </div>
+              <div class="check-item passed">
+                <span class="check-icon">✓</span>
+                <div class="check-content">
+                  <strong>Cover Art Format & Resolution</strong>
+                  <p>Verified <code>3000 x 3000 px</code> sRGB PNG. No barcodes, URLs, or store logos.</p>
+                </div>
+              </div>
+              <div class="check-item passed">
+                <span class="check-icon">✓</span>
+                <div class="check-content">
+                  <strong>DDEX AI Credits & Role Disclosure</strong>
+                  <p>Explicit AI generation provenance attached. Commercial rights verified.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Manifest Payload Preview -->
+          <div class="studio-card">
+            <h3 class="card-title">Staged DistroKid JSON Package</h3>
+            <textarea id="distrokid-json-preview" class="studio-textarea code-font tall-area" readonly></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: MUSICAL ENCYCLOPEDIA BROWSER -->
+      <section id="tab-encyclopedia" class="tab-pane">
+        <div class="pane-header">
+          <div>
+            <h2 class="pane-title">Musical Literacy Encyclopedia</h2>
+            <p class="pane-desc">Browse volumes on harmony, rhythm, arrangement, toplines, acoustics, and the Suno Metatag Codex.</p>
+          </div>
+        </div>
+
+        <div class="encyclopedia-layout">
+          <div class="encyclopedia-sidebar">
+            <button class="encyclopedia-nav-item active" data-vol="01">Vol 1: Harmony & Scales</button>
+            <button class="encyclopedia-nav-item" data-vol="02">Vol 2: Rhythm & Groove</button>
+            <button class="encyclopedia-nav-item" data-vol="03">Vol 3: Song Architecture</button>
+            <button class="encyclopedia-nav-item" data-vol="04">Vol 4: Topline & Lyrics</button>
+            <button class="encyclopedia-nav-item" data-vol="05">Vol 5: Sound Design & Mix</button>
+            <button class="encyclopedia-nav-item" data-vol="06">Vol 6: Suno Metatag Codex</button>
+          </div>
+          <div class="encyclopedia-content studio-card">
+            <div id="encyclopedia-reader">
+              <!-- Rendered markdown / text -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Floating Notification Toast -->
+    <div id="studio-toast" class="studio-toast">Message</div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

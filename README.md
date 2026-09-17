@@ -13,11 +13,23 @@ Telegram brief → compose → taste gate → Suno Custom Mode → two verified 
 | Surface | Purpose |
 |---|---|
 | `music-producer` Hermes profile | Grok-first creative persona with authenticated OpenAI Codex fallback |
-| Seven portable skills | Orchestration, lyrics, meditation, Suno craft/prompting, taste, browser execution |
+| Eleven portable skills | Orchestration, `/suno` execution routing, lyrics, adaptation, meditation, Suno craft/prompting, taste, browser execution, post-production, local open-weight generation |
 | Default-gateway mirroring | Natural Telegram prompts can execute on this machine without a second bot |
 | Background Chrome control | Uses the operator's logged-in Suno session; never stores credentials |
 | Session CLI | Reviewable brief, lyrics, style, score, and verified generation URLs |
 | One-Create policy | One explicit generation command spends one Create action, usually returning two takes |
+| Media Vault contract | Provider-neutral research, architecture, daily runbook, and machine-readable asset-manifest schema for voice, music, and video provenance |
+
+## Media Vault OS foundation
+
+The post-capture/post-generation media control plane is specified but **not yet implemented**. Start with:
+
+- [`docs/MEDIA-VAULT-OS-RESEARCH-2026-08-05.md`](docs/MEDIA-VAULT-OS-RESEARCH-2026-08-05.md) — dated GitHub/software research and stack decision;
+- [`docs/MEDIA-VAULT-ARCHITECTURE.md`](docs/MEDIA-VAULT-ARCHITECTURE.md) — immutable assets, transcripts, QC, lineage, replicas, archive, agents, and phased build;
+- [`docs/MEDIA-VAULT-DAILY-RUNBOOK.md`](docs/MEDIA-VAULT-DAILY-RUNBOOK.md) — daily voice memo, narration, music, and reel operating loops;
+- [`schemas/media-asset-manifest.schema.json`](schemas/media-asset-manifest.schema.json) and [`templates/media-asset-manifest.example.json`](templates/media-asset-manifest.example.json) — portable v0.1 metadata/provenance contract.
+
+The first implementation slice is deliberately local and small: idempotent ingest, SHA-256 content-addressed blobs, technical probe/QC, local transcription, SQLite metadata, and `inspect`/`where`/`lineage` queries. Cloud storage, graph UI, and release/archive signing come only after one real voice memo passes that vertical slice.
 
 ## Architecture
 
@@ -40,7 +52,7 @@ hermes computer-use doctor
 # Preview the exact local changes
 python scripts/install_machine.py --dry-run --install-profile
 
-# Install focused profile + mirror the seven skills into the default Telegram profile
+# Install focused profile + mirror the eleven skills into the default Telegram profile
 python scripts/install_machine.py --install-profile --profile-name music-producer
 
 # Make the Telegram dependencies explicit instead of relying on platform defaults

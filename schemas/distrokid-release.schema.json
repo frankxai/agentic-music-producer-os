@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankx.ai/schemas/distrokid-release.schema.json",
+  "title": "DistroKidReleasePackage",
+  "description": "Schema for pre-flight validated DistroKid distribution packaging.",
+  "type": "object",
+  "required": [
+    "release_id",
+    "release_type",
+    "title",
+    "primary_artist",
+    "target_release_date",
+    "cover_art",
+    "tracks",
+    "ddex_ai_disclosure",
+    "validation_results"
+  ],
+  "properties": {
+    "release_id": { "type": "string" },
+    "release_type": { "type": "string", "enum": ["single", "ep", "album"] },
+    "title": { "type": "string" },
+    "primary_artist": { "type": "string" },
+    "label": { "type": "string", "default": "Starlight Intelligence / FrankX" },
+    "upc": { "type": "string" },
+    "target_release_date": { "type": "string", "format": "date" },
+    "explicit_content": { "type": "boolean", "default": false },
+    "cover_art": {
+      "type": "object",
+      "required": ["file_path", "dimensions", "format", "color_space", "verified"],
+      "properties": {
+        "file_path": { "type": "string" },
+        "dimensions": { "type": "string", "const": "3000x3000" },
+        "format": { "type": "string", "enum": ["PNG", "JPEG"] },
+        "color_space": { "type": "string", "enum": ["sRGB", "RGB"] },
+        "verified": { "type": "boolean" }
+      }
+    },
+    "spotify_canvas": {
+      "type": "object",
+      "properties": {
+        "file_path": { "type": "string" },
+        "dimensions": { "type": "string", "const": "1080x1920" },
+        "duration_sec": { "type": "number" },
+        "verified": { "type": "boolean" }
+      }
+    },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "track_number",
+          "title",
+          "isrc",
+          "audio_file_path",
+          "songwriters",
+          "lufs_integrated",
+          "true_peak_dbtp",
+          "qc_passed"
+        ],
+        "properties": {
+          "track_number": { "type": "integer" },
+          "title": { "type": "string" },
+          "isrc": { "type": "string" },
+          "audio_file_path": { "type": "string" },
+          "songwriters": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "producers": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "lufs_integrated": { "type": "number", "minimum": -16.0, "maximum": -12.0 },
+          "true_peak_dbtp": { "type": "number", "maximum": -1.0 },
+          "qc_passed": { "type": "boolean" }
+        }
+      }
+    },
+    "ddex_ai_disclosure": {
+      "type": "object",
+      "required": ["contains_ai_generation", "ai_role", "provenance_ledger_ref"],
+      "properties": {
+        "contains_ai_generation": { "type": "boolean" },
+        "ai_role": { "type": "string" },
+        "provenance_ledger_ref": { "type": "string" },
+        "human_authorship_components": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "validation_results": {
+      "type": "object",
+      "required": ["all_checks_passed", "validated_at", "validator_version"],
+      "properties": {
+        "all_checks_passed": { "type": "boolean" },
+        "validated_at": { "type": "string", "format": "date-time" },
+        "validator_version": { "type": "string" }
+      }
+    }
+  },
+  "additionalProperties": false
+}

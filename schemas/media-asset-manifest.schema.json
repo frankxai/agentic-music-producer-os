@@ -1,0 +1,331 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/frankxai/agentic-music-producer-os/schemas/media-asset-manifest.schema.json",
+  "title": "Media Vault Asset Manifest",
+  "description": "Provider-neutral manifest for immutable media blobs, lineage, transcripts, quality evidence, rights, storage replicas, and archive state.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "assetId",
+    "kind",
+    "status",
+    "title",
+    "capturedAt",
+    "ingestedAt",
+    "privacyClass",
+    "blobs",
+    "relationships",
+    "qualityMeasurements",
+    "processingRuns",
+    "rights",
+    "provenance"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "0.1.0" },
+    "assetId": { "$ref": "#/$defs/id" },
+    "projectId": { "$ref": "#/$defs/id" },
+    "recordingSessionId": { "$ref": "#/$defs/id" },
+    "kind": {
+      "enum": [
+        "voice_memo",
+        "narration",
+        "interview",
+        "music",
+        "stem",
+        "video",
+        "reel",
+        "image",
+        "transcript",
+        "caption",
+        "project_file",
+        "archive_package",
+        "other"
+      ]
+    },
+    "status": {
+      "enum": [
+        "discovered",
+        "registered",
+        "qc_failed",
+        "needs_review",
+        "active",
+        "approved",
+        "archive_candidate",
+        "archived",
+        "published",
+        "tombstoned"
+      ]
+    },
+    "title": { "type": "string", "minLength": 1, "maxLength": 300 },
+    "capturedAt": { "type": "string", "format": "date-time" },
+    "ingestedAt": { "type": "string", "format": "date-time" },
+    "privacyClass": {
+      "enum": ["public", "internal", "confidential", "protected_local"]
+    },
+    "createdBy": { "$ref": "#/$defs/actor" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "originalFileName": { "type": "string", "minLength": 1 },
+        "captureApplication": { "type": "string" },
+        "captureApplicationVersion": { "type": "string" },
+        "equipmentProfileId": { "$ref": "#/$defs/id" },
+        "mimeType": { "type": "string" },
+        "container": { "type": "string" },
+        "codec": { "type": "string" },
+        "sampleRateHz": { "type": "integer", "minimum": 1 },
+        "bitDepth": { "type": "integer", "minimum": 1 },
+        "channels": { "type": "integer", "minimum": 1 },
+        "durationMs": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "blobs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/blob" }
+    },
+    "relationships": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relationship" }
+    },
+    "transcripts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/transcript" },
+      "default": []
+    },
+    "qualityMeasurements": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/qualityMeasurement" }
+    },
+    "listeningReviews": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/listeningReview" },
+      "default": []
+    },
+    "processingRuns": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/processingRun" }
+    },
+    "rights": { "$ref": "#/$defs/rights" },
+    "provenance": { "$ref": "#/$defs/provenance" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 100 },
+      "uniqueItems": true,
+      "default": []
+    },
+    "collections": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/id" },
+      "uniqueItems": true,
+      "default": []
+    },
+    "recordVersion": { "type": "integer", "minimum": 1, "default": 1 },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{1,31}_[0-9a-fA-F-]{8,64}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": { "enum": ["human", "agent", "tool", "provider", "system"] },
+        "id": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "displayName": { "type": "string", "maxLength": 200 }
+      }
+    },
+    "replica": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["replicaId", "tier", "provider", "uri", "observedAt", "verification"],
+      "properties": {
+        "replicaId": { "$ref": "#/$defs/id" },
+        "tier": { "enum": ["hot_local", "warm_object", "cold_archive", "backup", "offline"] },
+        "provider": { "type": "string", "minLength": 1 },
+        "uri": { "type": "string", "minLength": 1 },
+        "storageClass": { "type": "string" },
+        "region": { "type": "string" },
+        "observedAt": { "type": "string", "format": "date-time" },
+        "verification": { "enum": ["unverified", "size_checked", "hash_checked", "restore_tested"] },
+        "objectLockUntil": { "type": "string", "format": "date-time" },
+        "lastRestoreTestAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "blob": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blobId", "role", "sha256", "bytes", "mimeType", "createdAt", "replicas"],
+      "properties": {
+        "blobId": { "$ref": "#/$defs/id" },
+        "role": {
+          "enum": [
+            "original",
+            "proxy",
+            "cleaned",
+            "edited",
+            "mix",
+            "master",
+            "stem",
+            "transcript",
+            "caption",
+            "thumbnail",
+            "waveform",
+            "spectrogram",
+            "project_file",
+            "archive_package",
+            "other"
+          ]
+        },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "mimeType": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "rebuildable": { "type": "boolean", "default": false },
+        "replicas": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/replica" }
+        }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subjectId", "predicate", "objectId"],
+      "properties": {
+        "subjectId": { "$ref": "#/$defs/id" },
+        "predicate": {
+          "enum": [
+            "derived_from",
+            "transcribes",
+            "aligned_to",
+            "excerpt_of",
+            "denoised_from",
+            "edited_from",
+            "mixed_from",
+            "mastered_from",
+            "stem_of",
+            "synchronized_with",
+            "visualizes",
+            "caption_for",
+            "published_as",
+            "packaged_in",
+            "supersedes"
+          ]
+        },
+        "objectId": { "$ref": "#/$defs/id" },
+        "processingRunId": { "$ref": "#/$defs/id" }
+      }
+    },
+    "transcript": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transcriptAssetId", "sourceBlobId", "language", "engine", "model", "format", "reviewState"],
+      "properties": {
+        "transcriptAssetId": { "$ref": "#/$defs/id" },
+        "sourceBlobId": { "$ref": "#/$defs/id" },
+        "language": { "type": "string", "minLength": 2, "maxLength": 35 },
+        "engine": { "type": "string", "minLength": 1 },
+        "model": { "type": "string", "minLength": 1 },
+        "runtimeVersion": { "type": "string" },
+        "format": { "enum": ["json", "txt", "vtt", "srt"] },
+        "wordTimestamps": { "type": "boolean" },
+        "diarization": { "type": "boolean" },
+        "reviewState": { "enum": ["machine", "needs_review", "human_corrected", "approved", "redacted_export"] },
+        "parentTranscriptAssetId": { "$ref": "#/$defs/id" }
+      }
+    },
+    "qualityMeasurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["measurementId", "blobId", "profile", "metric", "value", "unit", "method", "tool", "toolVersion", "measuredAt", "gate"],
+      "properties": {
+        "measurementId": { "$ref": "#/$defs/id" },
+        "blobId": { "$ref": "#/$defs/id" },
+        "profile": { "type": "string", "minLength": 1 },
+        "metric": { "type": "string", "minLength": 1 },
+        "value": { "type": ["number", "integer", "string", "boolean"] },
+        "unit": { "type": "string", "minLength": 1 },
+        "method": { "type": "string", "minLength": 1 },
+        "tool": { "type": "string", "minLength": 1 },
+        "toolVersion": { "type": "string", "minLength": 1 },
+        "measuredAt": { "type": "string", "format": "date-time" },
+        "gate": { "enum": ["pass", "warn", "fail", "informational"] },
+        "evidenceSha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "listeningReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewId", "blobId", "reviewer", "playbackMethod", "reviewedAt", "verdict", "notes"],
+      "properties": {
+        "reviewId": { "$ref": "#/$defs/id" },
+        "blobId": { "$ref": "#/$defs/id" },
+        "reviewer": { "$ref": "#/$defs/actor" },
+        "playbackMethod": { "type": "string", "minLength": 1 },
+        "reviewedAt": { "type": "string", "format": "date-time" },
+        "verdict": { "enum": ["KEEP", "ITERATE", "CUT", "APPROVE", "HOLD"] },
+        "notes": { "type": "string", "minLength": 1 }
+      }
+    },
+    "processingRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runId", "operation", "tool", "toolVersion", "parameterSha256", "inputBlobIds", "outputBlobIds", "startedAt", "completedAt", "actor", "receiptSha256"],
+      "properties": {
+        "runId": { "$ref": "#/$defs/id" },
+        "operation": { "type": "string", "minLength": 1 },
+        "tool": { "type": "string", "minLength": 1 },
+        "toolVersion": { "type": "string", "minLength": 1 },
+        "provider": { "type": "string" },
+        "model": { "type": "string" },
+        "parameterSha256": { "$ref": "#/$defs/sha256" },
+        "inputBlobIds": { "type": "array", "items": { "$ref": "#/$defs/id" }, "minItems": 1 },
+        "outputBlobIds": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" },
+        "actor": { "$ref": "#/$defs/actor" },
+        "receiptSha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["consentState", "voiceRights", "inputRights", "aiRole", "releaseAuthority", "retentionPolicy"],
+      "properties": {
+        "consentState": { "enum": ["not_applicable", "unknown", "restricted", "documented"] },
+        "voiceRights": { "enum": ["not_applicable", "unknown", "self", "licensed", "restricted", "prohibited"] },
+        "inputRights": { "enum": ["unknown", "owned", "licensed", "public_domain", "restricted", "prohibited"] },
+        "aiRole": { "enum": ["none", "transcription", "analysis", "assistive_edit", "generative_component", "predominantly_generated", "mixed"] },
+        "providerTermsSnapshot": { "type": "string" },
+        "releaseAuthority": { "enum": ["absent", "private_only", "human_required", "human_approved"] },
+        "retentionPolicy": { "type": "string", "minLength": 1 },
+        "deletionHold": { "type": "boolean", "default": false }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eventLogHeadSha256", "integrityState"],
+      "properties": {
+        "eventLogHeadSha256": { "$ref": "#/$defs/sha256" },
+        "integrityState": { "enum": ["unverified", "local_hash_chain", "externally_anchored", "package_validated"] },
+        "c2paManifestUrl": { "type": "string" },
+        "bagitPackageId": { "$ref": "#/$defs/id" },
+        "roCrateId": { "$ref": "#/$defs/id" },
+        "approvedBy": { "$ref": "#/$defs/actor" },
+        "approvedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

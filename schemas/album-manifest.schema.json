@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankx.ai/schemas/album-manifest.schema.json",
+  "title": "AlbumManifest",
+  "description": "Schema for managing multi-track albums, credit budgets, takes, scoring, and release pipelines.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "album_id",
+    "title",
+    "artist",
+    "genre",
+    "create_budget",
+    "tracks"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 2
+    },
+    "album_id": {
+      "type": "string",
+      "pattern": "^album-[a-z0-9-]+$"
+    },
+    "title": {
+      "type": "string"
+    },
+    "artist": {
+      "type": "string"
+    },
+    "genre": {
+      "type": "string"
+    },
+    "concept": {
+      "type": "string"
+    },
+    "target_release_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "distributor": {
+      "type": "string",
+      "default": "DistroKid"
+    },
+    "upc": {
+      "type": "string"
+    },
+    "cover_art": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "enum": ["pending", "generated", "approved"] },
+        "path": { "type": "string" },
+        "dimensions": { "type": "string", "default": "3000x3000" },
+        "generator": { "type": "string" }
+      }
+    },
+    "spotify_canvas": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "enum": ["pending", "generated", "approved"] },
+        "path": { "type": "string" },
+        "dimensions": { "type": "string", "default": "1080x1920" },
+        "duration_sec": { "type": "number" }
+      }
+    },
+    "create_budget": {
+      "type": "object",
+      "required": ["maximum", "reserved", "observed"],
+      "properties": {
+        "maximum": { "type": "integer", "minimum": 1, "maximum": 50 },
+        "reserved": { "type": "integer", "minimum": 0 },
+        "observed": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "track_number",
+          "track_id",
+          "title",
+          "key",
+          "bpm",
+          "status"
+        ],
+        "properties": {
+          "track_number": { "type": "integer", "minimum": 1 },
+          "track_id": { "type": "string" },
+          "title": { "type": "string" },
+          "key": { "type": "string" },
+          "bpm": { "type": "integer" },
+          "voice_persona_id": { "type": "string" },
+          "suno_take_url": { "type": "string" },
+          "suno_take_id": { "type": "string" },
+          "critic_score": { "type": "number", "minimum": 0, "maximum": 10 },
+          "mix_status": { "type": "string", "enum": ["unmixed", "in_progress", "mastered_pass", "rejected"] },
+          "isrc": { "type": "string" },
+          "status": { "type": "string", "enum": ["draft", "generating", "critic_review", "approved", "mastered", "ready_for_release", "released"] }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

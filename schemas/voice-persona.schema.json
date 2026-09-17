@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankx.ai/schemas/voice-persona.schema.json",
+  "title": "VoicePersona",
+  "description": "Schema for registered vocal personas, timbre attributes, and custom model seeds.",
+  "type": "object",
+  "required": [
+    "persona_id",
+    "name",
+    "gender",
+    "vocal_register",
+    "timbre_description",
+    "prompt_modifiers",
+    "created_at"
+  ],
+  "properties": {
+    "persona_id": {
+      "type": "string",
+      "pattern": "^persona-[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string",
+      "enum": ["male", "female", "non-binary", "androgynous", "choir", "ensemble"]
+    },
+    "vocal_register": {
+      "type": "string",
+      "enum": ["soprano", "mezzo-soprano", "alto", "tenor", "baritone", "bass", "falsetto", "spoken"]
+    },
+    "timbre_description": {
+      "type": "string"
+    },
+    "prompt_modifiers": {
+      "type": "string",
+      "description": "Standard bracketed Suno prompt modifier for this voice"
+    },
+    "suitable_genres": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "suno_voice_id": {
+      "type": "string",
+      "description": "Suno vendor Voice ID pointer (if available)"
+    },
+    "custom_model_id": {
+      "type": "string",
+      "description": "Suno Persona / Custom Model ID pointer (if available)"
+    },
+    "reference_audio_path": {
+      "type": "string",
+      "description": "Path to local reference vocal sample"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}
