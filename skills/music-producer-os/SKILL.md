@@ -142,3 +142,7 @@ Do not claim audio quality, BPM accuracy, pronunciation, or successful generatio
 Use delegation only when independent expertise materially improves the output (for example, lyric craft and meditation-safety review in parallel). Do not run a standing seven-agent swarm for a normal track.
 
 Starlight Swarm is a thin bus. If this machine genuinely lacks a YogaBook-only input, send one line naming the artifact and acceptance criterion to the YogaBook bot; continue deep work in the home DM/session. Never post progress chatter or invite dual-gateway dialogue.
+
+## Evidence and factory integration
+
+Use `docs/MUSIC-FUNDAMENTALS.md`, `docs/PROVIDER-CAPABILITIES.md` and `docs/MUSIC-FACTORY-CONTRACT.md` for shared craft and provider selection. Keep this host's session/album receipts and one-gateway discipline. Any existing taste score is a subjective text-review aid with named reviewer and rationale; it never certifies unheard audio, rights or commercial performance. Generation, export, listening, technical QA and release remain separate evidenced stages. Verify visible model and credits before Create; never blindly repeat an uncertain submission.

@@ -1,7 +1,7 @@
 ---
 name: suno-prompt-architect
 description: "Convert a finished creative brief and lyrics into a precise Suno Custom Mode packet: title, style, exclusions, structure/performance tags, pronunciation notes, and one controlled alternate. Use before any Suno browser generation."
-version: 0.1.0
+version: 0.2.0
 tags: [suno, prompts, custom-mode, song-structure]
 ---
 
@@ -108,3 +108,13 @@ Return:
 7. optional one-variable alternate.
 
 Before browser execution, write the packet into the run's `style-prompt.md` and run the taste gate.
+
+## Shared fundamentals and provider boundary
+
+Read the relevant modules in `docs/MUSIC-FUNDAMENTALS.md`, then `docs/PROVIDER-CAPABILITIES.md` and `docs/MUSIC-FACTORY-CONTRACT.md` when selecting tools or executing production. Canonical public source: https://github.com/frankxai/agentic-music-producer-os. The craft precedes the provider packet.
+
+Suno v6 is the documented baseline checked 2026-10-01; capture the actual account model, settings, limits and credit cost before operating. No official public generation API was verified. Preserve the approved lyrics across adapters. Score/text analysis and a prompt review do not prove audio quality. Record real listening and measurements separately; keep unknown values null. Personal preferences and artist canon remain in their owner project.
+
+For MiniMax Music 3, translate section tags to their own lines; never share inline Suno performance tags blindly. For Eleven Music, use a prompt or a chunk plan and preserve exact approved lyric text. For Lyria, treat duration and harmony as requested direction. These are separate provider packets, not Suno endpoints.
+
+Resolve `docs/...` paths from the repository root, not from the skill folder. If using only this skill outside a checkout, read the same named documents from the canonical public source.

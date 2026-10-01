@@ -1,7 +1,7 @@
 ---
 name: suno-ai-mastery
 description: Design professional song and instrumental direction for the newest stable Suno model using genre, harmony, rhythm, arrangement, vocal persona, production, dynamics, and controlled iteration. Use for Suno composition strategy, arrangement, production troubleshooting, covers, extensions, and remasters.
-version: 0.1.0
+version: 0.2.0
 tags: [suno, music-production, arrangement, vocals, prompting]
 ---
 
@@ -113,3 +113,11 @@ For extensions, restate the core genre, vocal persona, and ending target to redu
 ## Output
 
 Provide one recommended production direction and, only when useful, one deliberate alternate that changes a single thesis variable. Include why the recommendation best serves the emotional contract.
+
+## Shared fundamentals and provider boundary
+
+Read the relevant modules in `docs/MUSIC-FUNDAMENTALS.md`, then `docs/PROVIDER-CAPABILITIES.md` and `docs/MUSIC-FACTORY-CONTRACT.md` when selecting tools or executing production. Canonical public source: https://github.com/frankxai/agentic-music-producer-os. The craft precedes the provider packet.
+
+Suno v6 is the documented baseline checked 2026-10-01; capture the actual account model, settings, limits and credit cost before operating. No official public generation API was verified. Preserve the approved lyrics across adapters. Score/text analysis and a prompt review do not prove audio quality. Record real listening and measurements separately; keep unknown values null. Personal preferences and artist canon remain in their owner project.
+
+Resolve `docs/...` paths from the repository root, not from the skill folder. If using only this skill outside a checkout, read the same named documents from the canonical public source.

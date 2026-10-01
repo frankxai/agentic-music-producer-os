@@ -165,3 +165,7 @@ The built-in Hermes `songwriting-and-ai-music` skill remains useful; this pack a
 ## Status
 
 **v0.1 machine-ready distribution.** Unit-tested local installer and session receipt tooling; browser readiness is verified separately against each machine's interactive Chrome/Suno session.
+
+## October production fundamentals
+
+Read [Music fundamentals](docs/MUSIC-FUNDAMENTALS.md), [Provider capabilities](docs/PROVIDER-CAPABILITIES.md) and [Music factory contract](docs/MUSIC-FACTORY-CONTRACT.md). These extend the existing eight portable skills and keep the machine-local Hermes/Suno receipts intact. Shared methods stay independent of artist canon and private taste. Suno uses the authorized supervised account; documented API alternatives include Lyria, Eleven Music and fal MiniMax Music 3. Native apps/MCP must be inventoried before claiming an integration. No paid API/account smoke test or machine installation is implied by this source update.

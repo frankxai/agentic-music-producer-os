@@ -103,3 +103,7 @@ AXIS: release_readiness 8.0/10 | EVIDENCE: Custom packet is complete, coherent, 
 REVISIONS:
 1. ...
 ```
+
+## Evidence and factory integration
+
+Use `docs/MUSIC-FUNDAMENTALS.md`, `docs/PROVIDER-CAPABILITIES.md` and `docs/MUSIC-FACTORY-CONTRACT.md` for shared craft and provider selection. Keep this host's session/album receipts and one-gateway discipline. Any existing taste score is a subjective text-review aid with named reviewer and rationale; it never certifies unheard audio, rights or commercial performance. Generation, export, listening, technical QA and release remain separate evidenced stages. Verify visible model and credits before Create; never blindly repeat an uncertain submission.
