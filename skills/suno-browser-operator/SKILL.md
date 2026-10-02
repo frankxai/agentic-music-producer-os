@@ -78,3 +78,7 @@ Report only observed facts:
 - visible error or credit state if generation failed.
 
 If URL extraction is not possible, save a screenshot and say the take was visually verified but not recorded; never invent a link.
+
+## Evidence and factory integration
+
+Use `docs/MUSIC-FUNDAMENTALS.md`, `docs/PROVIDER-CAPABILITIES.md` and `docs/MUSIC-FACTORY-CONTRACT.md` for shared craft and provider selection. Keep this host's session/album receipts and one-gateway discipline. Any existing taste score is a subjective text-review aid with named reviewer and rationale; it never certifies unheard audio, rights or commercial performance. Generation, export, listening, technical QA and release remain separate evidenced stages. Verify visible model and credits before Create; never blindly repeat an uncertain submission.

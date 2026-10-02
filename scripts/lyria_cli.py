@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lyria 3 generation lane. Never invents audio. Never prints secrets."""
+"""Lyria generation lane. Never invents audio. Never prints secrets."""
 
 from __future__ import annotations
 
@@ -24,9 +24,10 @@ def cmd_status(_args: argparse.Namespace) -> int:
         json.dumps(
             {
                 "provider": "google-lyria-3",
-                "models": ["lyria-3-clip-preview", "lyria-3-pro-preview"],
+                "models": ["lyria-3-clip-preview", "lyria-3.5"],
                 "key_present": _key_present(),
-                "ready": _key_present(),
+                "ready": False,
+                "account_verified": False,
                 "note": "Lyria emits audio, not MusicXML. Compile the score first.",
             },
             indent=2,
@@ -102,13 +103,13 @@ def main() -> int:
     status.set_defaults(func=cmd_status)
     packet = sub.add_parser("packet")
     packet.add_argument("prompt")
-    packet.add_argument("--model", default="lyria-3-pro-preview")
+    packet.add_argument("--model", default="lyria-3.5")
     packet.add_argument("--wav", action="store_true")
     packet.add_argument("--out")
     packet.set_defaults(func=cmd_packet)
     generate = sub.add_parser("generate")
     generate.add_argument("prompt")
-    generate.add_argument("--model", default="lyria-3-clip-preview")
+    generate.add_argument("--model", default="lyria-3.5")
     generate.add_argument("--out", required=True)
     generate.add_argument("--wav", action="store_true")
     generate.add_argument("--authorize", action="store_true")

@@ -1,7 +1,7 @@
 ---
 name: lyric-composer
 description: Write and revise original, singable lyrics with human specificity, strong prosody, memorable hooks, fresh imagery, emotional progression, and controlled vocabulary. Use for songs, hooks, verses, choruses, toplines, lyric rewrites, and Suno Custom Mode lyrics.
-version: 0.1.0
+version: 0.2.0
 tags: [lyrics, songwriting, prosody, hooks, suno]
 ---
 
@@ -14,6 +14,8 @@ Write as a serious songwriter, not a rhyming text generator. The lyric must carr
 ## Drafting sequence
 
 ### 1. Find the song's irreversible sentence
+
+For a requested 2–4-line hook, start from a charged spoken/social action instead. Skip full-song section checks, Verse 2 tests and fixed abstraction quotas; preserve the requested form.
 
 Complete: **"By the end, the speaker can finally say ______, but could not say it at the start."**
 
@@ -98,10 +100,10 @@ Guide pronunciation only where needed:
 ## Revision passes
 
 1. **Truth:** remove any line the speaker would never actually say.
-2. **Specificity:** replace at least three abstractions with images/actions.
+2. **Specificity:** replace weak abstractions with images/actions where the requested form needs them.
 3. **Architecture:** confirm every section changes pressure or knowledge.
 4. **Prosody:** speak/sing aloud; repair stresses and mouthfeel.
-5. **Hook:** test title phrase in isolation and after Verse 2.
+5. **Hook:** test the title phrase in isolation and, when a full song exists, after Verse 2.
 6. **Compression:** cut setup words, repeated explanations, and adjective stacks.
 7. **Originality:** remove phrases that resemble known lyrics or named-artist signatures.
 
@@ -125,3 +127,11 @@ Return:
 - short craft note: hook, image system, emotional turn, pronunciation risks.
 
 Do not preface the lyric with a long explanation.
+
+## Shared fundamentals and provider boundary
+
+Read the relevant modules in `docs/MUSIC-FUNDAMENTALS.md`, then `docs/PROVIDER-CAPABILITIES.md` and `docs/MUSIC-FACTORY-CONTRACT.md` when selecting tools or executing production. Canonical public source: https://github.com/frankxai/agentic-music-producer-os. The craft precedes the provider packet.
+
+Suno v6 is the documented baseline checked 2026-10-01; capture the actual account model, settings, limits and credit cost before operating. No official public generation API was verified. Preserve the approved lyrics across adapters. Score/text analysis and a prompt review do not prove audio quality. Record real listening and measurements separately; keep unknown values null. Personal preferences and artist canon remain in their owner project.
+
+Resolve `docs/...` paths from the repository root, not from the skill folder. If using only this skill outside a checkout, read the same named documents from the canonical public source.

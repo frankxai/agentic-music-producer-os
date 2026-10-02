@@ -29,4 +29,8 @@ python scripts/lyria_cli.py status
 
 Local `--preview --mp3` is a hearing sketch. Highest-emotion audio is a human playing the sheet. Highest simulation is MIDI through Pianoteq/NotePerformer/a real library. Lyria 3 and Suno are separate lanes and will drift from the notation.
 
-Lyria 3: `lyria-3-clip-preview` (30s) and `lyria-3-pro-preview` (full, MP3 or WAV, 44.1 kHz stereo). All Lyria audio is SynthID-watermarked. Custom lyrics/timestamps are supported; MusicXML is not.
+Lyria 3: `lyria-3-clip-preview` (30s) and `lyria-3.5` (full, MP3 or WAV, 44.1 kHz stereo). All Lyria audio is SynthID-watermarked. Custom lyrics/timestamps are supported; MusicXML is not.
+
+## Provider-neutral production
+
+Start with [Music fundamentals](MUSIC-FUNDAMENTALS.md), use the dated [provider register](PROVIDER-CAPABILITIES.md), and follow the [factory contract](MUSIC-FACTORY-CONTRACT.md). Lyria is a generated performance, not an exact notation renderer. `status` reports key presence separately from account/API verification; this upgrade has not made a paid request.
