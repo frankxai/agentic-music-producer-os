@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "campaign_id": "demo-campaign-001",
+  "artist": "Example Artist",
+  "listener_promise": "Warm night-drive electronic music with an intimate vocal and a answering guitar motif.",
+  "production_mode": "hybrid",
+  "strategy": "single_ladder",
+  "strategy_reason": "Test one coherent listener promise with three lead recordings before a full album.",
+  "primary_channel": "YouTube plus one selected discovery channel",
+  "currency": "EUR",
+  "budget_cap_eur": 500,
+  "target_release_date": null,
+  "provider_limits": {
+    "planned_credits": 100,
+    "remaining_credits": null,
+    "planned_downloads": 8,
+    "remaining_downloads": null
+  },
+  "costs": [
+    {
+      "id": "demo-cost-subscriptions",
+      "category": "subscriptions",
+      "planned_eur": 60,
+      "actual_eur": null
+    },
+    {
+      "id": "demo-cost-production",
+      "category": "production",
+      "planned_eur": 60,
+      "actual_eur": null
+    },
+    {
+      "id": "demo-cost-visuals",
+      "category": "visuals",
+      "planned_eur": 100,
+      "actual_eur": null
+    },
+    {
+      "id": "demo-cost-distribution",
+      "category": "distribution",
+      "planned_eur": 15,
+      "actual_eur": null
+    },
+    {
+      "id": "demo-cost-marketing",
+      "category": "marketing",
+      "planned_eur": 160,
+      "actual_eur": null
+    },
+    {
+      "id": "demo-cost-reasoning",
+      "category": "reasoning",
+      "planned_eur": 35,
+      "actual_eur": null
+    },
+    {
+      "id": "demo-cost-reserve",
+      "category": "reserve",
+      "planned_eur": 70,
+      "actual_eur": null
+    }
+  ],
+  "experiments": [
+    {
+      "id": "demo-test-001",
+      "hypothesis": "A performance opening earns more voluntary listening-page visits than a mood-only opening in the same channel/window.",
+      "decision_rule": "Inspect meaningful downstream visits, sample size and source differences at seven days; retain descriptive uncertainty and fund a next test only if justified.",
+      "spend_cap_eur": 60,
+      "observations": null
+    }
+  ]
+}
+

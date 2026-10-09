@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-09",
+  "recheck_before_purchase": true,
+  "account_access_verified": false,
+  "quotes": [
+    {
+      "provider": "Suno",
+      "source": "https://suno.com/pricing",
+      "currency": "USD",
+      "billing": "annual displayed monthly equivalent before tax",
+      "pro_monthly_equivalent": 8,
+      "pro_annualized": 96,
+      "premier_monthly_equivalent": 24,
+      "premier_annualized": 288,
+      "monthly_credits": [
+        2500,
+        10000
+      ],
+      "ordinary_monthly_downloads": [
+        20,
+        60
+      ],
+      "note": "Studio exception and per-account entitlements require separate verification; no month-to-month EUR quote."
+    },
+    {
+      "provider": "DistroKid",
+      "source": "https://distrokid.com/product/distrokid/plans-and-pricing-2",
+      "currency": "USD",
+      "billing": "annual before checkout review",
+      "musician_plus": 44.99,
+      "artists_plus": 2,
+      "ultimate_starting": 89.99,
+      "artists_ultimate_starting": 5,
+      "extras_included": false
+    },
+    {
+      "provider": "OpenArt",
+      "source": "https://openart.ai/pricing",
+      "price": null,
+      "reason": "Billing/promotional display ambiguous; Director excluded from approximate headline video counts. Obtain actual job quote."
+    },
+    {
+      "provider": "Higgsfield",
+      "source": "https://higgsfield.ai/pricing",
+      "price": null,
+      "reason": "Reliable numeric plan price not exposed in retrieved page. Obtain actual account/job quote."
+    }
+  ]
+}
+
