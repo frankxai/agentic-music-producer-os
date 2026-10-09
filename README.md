@@ -169,3 +169,8 @@ The built-in Hermes `songwriting-and-ai-music` skill remains useful; this pack a
 ## October production fundamentals
 
 Read [Music fundamentals](docs/MUSIC-FUNDAMENTALS.md), [Provider capabilities](docs/PROVIDER-CAPABILITIES.md) and [Music factory contract](docs/MUSIC-FACTORY-CONTRACT.md). These extend the existing eight portable skills and keep the machine-local Hermes/Suno receipts intact. Shared methods stay independent of artist canon and private taste. Suno uses the authorized supervised account; documented API alternatives include Lyria, Eleven Music and fal MiniMax Music 3. Native apps/MCP must be inventoried before claiming an integration. No paid API/account smoke test or machine installation is implied by this source update.
+
+## Production and customer-pack edition
+
+[Production & Business Edition](docs/business-os/README.md) connects the existing studio workflow to album strategy, research, covers/video, distribution, marketing, costs and template improvements. Includes a six-database Notion schema, five campaign playbooks, a fictional campaign, an offline allowance/credit/download report and a fixed-allowlist draft ZIP exporter. The EUR 99 price is a hypothesis; commercial license, customer duplication/mobile/scale, actual activation and checkout/delivery remain open. No private artist catalog is distributed and no hosted worker or paid campaign is activated.
+

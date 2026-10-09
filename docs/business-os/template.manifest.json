@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "product_id": "product_music_producer_os",
+  "sku_id": "sku_music_producer_os_v1",
+  "pack_version": "0.1.0",
+  "status": "draft_not_commercially_released",
+  "price_hypothesis_eur": 99,
+  "active_price": null,
+  "license_state": "decision_required",
+  "runtime_included": false,
+  "paid_tool_credits_included": false,
+  "private_artist_data_included": false,
+  "notion_databases": 6,
+  "production_paths": [
+    "human",
+    "hybrid",
+    "generated"
+  ],
+  "campaign_strategies": [
+    "single_ladder",
+    "world_album",
+    "performance_catalog",
+    "scene_test",
+    "sync_library"
+  ],
+  "release_gates": [
+    "complete_personal_cycle",
+    "clean_customer_duplication",
+    "mobile_and_scale",
+    "rights_license",
+    "price_merchant_terms",
+    "checkout_delivery",
+    "real_activation"
+  ],
+  "update_policy": "Proposed twelve months of compatible pack updates; no active contractual promise."
+}
+
