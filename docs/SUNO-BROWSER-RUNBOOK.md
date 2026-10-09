@@ -29,7 +29,7 @@ python scripts/session_cli.py validate <session-dir>
 
 Required state:
 - `ready_for_suno: true`;
-- taste review ≥85/100 for songs/instrumentals or ≥90/100 for meditations, with no hard veto;
+- scoped review satisfies the selected adapter (see `SESSION-MODES.md`), with no unresolved hard veto;
 - explicit instruction to generate;
 - one-Create budget unused for this instruction.
 
@@ -38,9 +38,9 @@ Required state:
 1. Capture Chrome in SOM mode.
 2. Reuse an existing Suno tab or navigate to `https://suno.com/create`.
 3. Verify the logged-in Create workspace. Stop at any authentication or payment UI.
-4. Enable Custom Mode.
-5. Select the newest stable model visible in the account.
-6. Fill title, lyrics/instrumental mode, style, and Exclude Styles.
+4. Select the reviewed Simple or Custom Mode.
+5. Select the appropriate currently visible model for the job; record its exact label.
+6. Simple: fill exact `prompt.md` and instrumental state. Custom: fill title, lyrics/instrumental state, style and available exclusions.
 7. Capture again and compare UI readback with run files.
 8. Click Create once.
 9. Wait for completed cards; do not click Create again while processing.
@@ -50,7 +50,7 @@ Required state:
 
 ## Credit strategy
 
-One Create action normally returns two takes, which is the best default exploration-to-credit ratio. Listen to both before changing the prompt. If neither expresses the thesis, revise one dominant variable and request another pair explicitly.
+One authorized action may produce multiple takes; record the actual count. The current local recorder supports at most two per action. Missing or additional results require reconciliation, not an automatic new click. Listen to the actual assets before judging them or choosing a revision.
 
 ## Login handoff
 
@@ -65,10 +65,15 @@ The agent never types passwords, passkeys, email codes, authenticator codes, rec
 
 A successful browser run must include observed:
 - model label;
-- Custom/Instrumental mode;
+- actual Simple/Custom and Instrumental state;
 - Create action count;
 - completed take count;
 - take title + Suno URL/ID;
 - manifest readback.
 
 A screenshot alone proves page state, not a URL. A plausible URL is never acceptable evidence.
+
+
+## Receipt order
+
+Validate the selected mode, then record `authorize-create` with operator reference and expiry. Observe vocals/persona when applicable. Before the single click, record `preflight` with the same authorization ID, visible model, redacted UI evidence reference/hash and explicit `--mode simple` or `--mode custom`. After the actual click, use `record-submit` exactly once. Record only observed results with the same action ID, model and explicit mode. A changed artifact invalidates authorization. An uncertain submission is held for reconciliation; never repeat it blindly. Read `MUSIC-REGULATORS.md` before downstream export or release.

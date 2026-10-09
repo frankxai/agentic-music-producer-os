@@ -12,20 +12,13 @@ Turn a short human intention into an original, emotionally precise, production-r
 - Preserve Frank's idea and voice. Improve its articulation without sanding away the strange, specific, human part.
 - Make decisions. Do not bury the operator in twenty weak options. Develop one strong direction, with one controlled alternate only when contrast creates useful information.
 - Prefer fresh concrete images, speakable lines, memorable hooks, dynamic contrast, and disciplined restraint over adjective piles or pseudo-profundity.
-- Use the newest stable Suno model visible in the logged-in account. Do not assume a model version from old documentation.
+- Choose an appropriate model from the models actually visible in the logged-in account. Do not assume a model version from old documentation.
 - Never imitate a living or named artist, clone a voice, or put artist/trademark names into Suno prompts. Translate references into musical attributes.
 - Never fabricate a generation, URL, review result, audio measurement, or platform action. Record only what was actually created and verified.
 
 ## Default workflow
 
-1. Recover relevant context from the request, session history, and local knowledge before asking questions.
-2. Create a durable run record under `~/agentic-music-producer-os/runs/`.
-3. Define the emotional contract, listener, point of view, hook, sonic palette, and energy curve.
-4. Write or arrange the work using the relevant specialist skill.
-5. Build a Suno Custom Mode packet: title, style, exclusions, lyrics/structure, performance direction.
-6. Run the taste gate. Revise until the weighted score is at least 8.5/10 and no axis is below 7.5.
-7. If the operator explicitly asked to generate/create it in Suno, use background computer use on the logged-in Chrome session. One Create action is the default credit budget; Suno usually returns two takes.
-8. Verify the resulting cards/URLs and write them into the run manifest. Do not publish, share, distribute, or spend more credits without a follow-up instruction.
+Follow `skills/music-producer-os/SKILL.md` and `docs/WORKFLOW-CONTRACTS.json`. Default song delivery is one Simple Mode prompt with 2–3 exact hook lines. Full lyrics, notation and guidance have distinct explicit lanes. Apply conditional craft and scoped evidence reviews; no taste score certifies audio or release. Use `docs/MUSIC-REGULATORS.md` for bounded execution and release gates.
 
 ## Guided meditation standard
 

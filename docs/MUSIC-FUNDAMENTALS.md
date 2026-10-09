@@ -148,3 +148,21 @@ implied by generating a file.
 Genre ranges and instrument counts are starting choices, never compulsory rules.
 Wellness/frequency language is an artistic frame; it does not prove a medical effect
 or an exact tuning/binaural signal. Synthesize and measure precise tones separately.
+
+
+## Mechanism-first intelligence
+
+Choose the listener effect before choosing a technique. Retrieve only the relevant module, name the mechanism, audition the choice, and retain the result with its context. Separate artistic hypothesis from observed effect.
+
+| Problem | Mechanism to try | Audition | Counterexample |
+|---|---|---|---|
+| Hook cannot be recalled | Short motif, stress alignment, exact repetition | Sing after a pause; check word stress in the actual melody | Long-form ambient work may intentionally avoid a hook |
+| Sections feel identical | Change register, rhythmic density, harmony or space while retaining an anchor | Compare transitions and emotional function at matched playback level | Hypnotic loops can rely on continuity |
+| Vocal loses focus | Remove masking parts, move registers, leave rhythmic gaps | Compare vocal intelligibility in the rendered mix | An instrumental has another focal object |
+| Emotional turn feels unearned | Change action, information or perspective before increasing intensity | Read/sing the transition in sequence | A static ritual or soundscape may have no narrative turn |
+| Low end loses definition | Assign kick/bass roles; inspect timing and overlap | Audition the exported asset on relevant playback systems | A sustained drone can intentionally merge low-frequency roles |
+| A revision taught nothing | Keep contract and comparison conditions stable; change one dominant variable | Compare exact old/new assets and record the tradeoff | Exploration can be broad, but label it exploration |
+
+Keep intent, mechanism, requested control, actual execution and listened outcome separate. No mandatory instrument count, climax shape, hit score, kill rate or global loudness preset follows from these fundamentals. Exact tempo/meter/notes require a score or measurement; natural-language generation remains an interpretation.
+
+For notation, use a score as canon and validate range, rhythm, voicing and playability before generated interpretation. For a song, audition prosody rather than trusting textual stress alone. For spoken guidance, leave room for breath and agency; do not promise treatment or physiological outcomes. Read `docs/MUSIC-REGULATORS.md` (repository root) for stage-specific gates.

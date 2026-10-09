@@ -38,6 +38,9 @@ jobs:
       - name: Compile and run deterministic tests
         run: python -m compileall -q scripts tests && python -m unittest discover -s tests -v
 
+      - name: Validate skill graph and handoffs
+        run: python scripts/validate_skill_contracts.py
+
       - name: Prove canonical files remain unchanged
         shell: pwsh
         run: |
@@ -46,3 +49,4 @@ jobs:
             $changes
             throw "deterministic gate modified canonical files"
           }
+
