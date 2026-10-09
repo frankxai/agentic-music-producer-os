@@ -1,11 +1,15 @@
 # Agentic Music Producer OS
 
+> Current skill/workflow contract (2026-10-09): [workflow registry](docs/WORKFLOW-CONTRACTS.json)
+> Read the mode-specific [session contracts](docs/SESSION-MODES.md) and [regulators](docs/MUSIC-REGULATORS.md). Simple prompts are the default; retained Custom scoring is adapter compatibility, not universal musical or release truth. Historical examples below do not override these contracts.
+
+
 A shareable Hermes profile and machine workflow for **original songs, score-first piano/orchestra works, guided meditations, Suno/Lyria packets, taste review, and verified generation**.
 
 This repository upgrades the original scaffold into a working profile-first system. It uses Frank's existing creator/music intelligence, but keeps runtime state local and the operating surface small:
 
 ```text
-Telegram brief → compose → taste gate → Suno Custom Mode → two verified takes → durable receipt
+Brief → relevant craft → mode-specific review → one authorized action → observed receipts
 ```
 
 ## What ships
@@ -17,11 +21,11 @@ Telegram brief → compose → taste gate → Suno Custom Mode → two verified 
 | Default-gateway mirroring | Natural Telegram prompts can execute on this machine without a second bot |
 | Background Chrome control | Uses the operator's logged-in Suno session; never stores credentials |
 | Session CLI | Reviewable brief, lyrics, style, score, and verified generation URLs |
-| One-Create policy | One explicit generation command spends one Create action, usually returning two takes |
+| One-Create policy | One explicit generation command authorizes one Create action; record actual results |
 
 ## Architecture
 
-The existing default Hermes gateway remains the **single Telegram front door**. The dedicated music profile is installed for focused local sessions, but its gateway stays stopped. This avoids duplicate polling, shared-channel echo loops, and token waste.
+The existing default Hermes gateway remains the **single Telegram front door**. The installation design uses a dedicated music profile for focused local sessions, with its gateway stopped. This source change does not verify a machine install. This avoids duplicate polling, shared-channel echo loops, and token waste.
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
