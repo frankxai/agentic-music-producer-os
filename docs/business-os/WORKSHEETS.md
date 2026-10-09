@@ -7,7 +7,7 @@ Public spelling / legal contracting party / identity type / one listener promise
 
 ## Album bible
 Thesis in one sentence / narrator and addressee / emotional beginning and turn / recurring motif / vocal contract / fixed palette / rotating grooves/instruments / unique signatures / track roles / sequencing arc / explicit exclusions / accepted evidence pointers / primary campaign and fallback.
-Use70%fixed,20%rotated,10%signature as a design heuristic, not an audible-quality guarantee. Keep exact winners outside editable summaries.
+Use 70% fixed, 20% rotated, 10% signature as a design heuristic, not an audible-quality guarantee. Keep exact winners outside editable summaries.
 
 ## Recording selection
 Work/revision and asset hash / lawful playback pointer / review context / matched-loudness method if actually used / timestamped hook/voice/groove/contrast notes / keep-revise-archive / fatal blocker / one smallest next intervention / exact reviewer verdict.
@@ -19,7 +19,7 @@ Keep editable originals and inspect small-thumbnail legibility. A beautiful imag
 
 ## Music video brief
 Selected master hash / full duration and chosen excerpt / narrative versus performance choice / recurring visual identity / approved character/likeness references / section-to-scene map / two-three anchor frames / beat and emotional cut targets / lip-sync need / original master as soundtrack / provider job quote / attempts and cap / export aspect ratios / final audio and continuity QA.
-Test one15–30secondexcerpt before a full film. Keep generated scene audio from accidentally replacing the approved track. A video export is not a platform delivery.
+Test one 15–30 second excerpt before a full film. Keep generated scene audio from accidentally replacing the approved track. A video export is not a platform delivery.
 
 ## Frozen release packet
 Release/work/recording/version IDs / primary artist and actual profile identifiers / title/version/language/explicit flags / contributors and accurate roles / composition and master owners / lyrics and human authorship / AI model/source contribution / samples/voice/likeness permission / dated provider creation/download entitlement / agreed splits / master/artwork hash and evidence pointers / actual technical QA / release date/territory / accountable approval bound to exact revision.

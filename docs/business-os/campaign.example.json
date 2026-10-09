@@ -2,7 +2,7 @@
   "schema_version": 1,
   "campaign_id": "demo-campaign-001",
   "artist": "Example Artist",
-  "listener_promise": "Warm night-drive electronic music with an intimate vocal and a answering guitar motif.",
+  "listener_promise": "Warm night-drive electronic music with an intimate vocal and an answering guitar motif.",
   "production_mode": "hybrid",
   "strategy": "single_ladder",
   "strategy_reason": "Test one coherent listener promise with three lead recordings before a full album.",
