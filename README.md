@@ -169,3 +169,21 @@ The built-in Hermes `songwriting-and-ai-music` skill remains useful; this pack a
 ## October production fundamentals
 
 Read [Music fundamentals](docs/MUSIC-FUNDAMENTALS.md), [Provider capabilities](docs/PROVIDER-CAPABILITIES.md) and [Music factory contract](docs/MUSIC-FACTORY-CONTRACT.md). These extend the existing eight portable skills and keep the machine-local Hermes/Suno receipts intact. Shared methods stay independent of artist canon and private taste. Suno uses the authorized supervised account; documented API alternatives include Lyria, Eleven Music and fal MiniMax Music 3. Native apps/MCP must be inventoried before claiming an integration. No paid API/account smoke test or machine installation is implied by this source update.
+
+<!-- STARLIGHT:OPERATING:BEGIN v2 sha=9f8fecc91edc source=794db1e51a55a128816f7aa266eb0ac1dbd452c3 -->
+
+## Agent operating guidance
+
+Repository agents use the shared Starlight operating contract in `AGENTS.md` alongside local instructions.
+The contract asks agents to establish a useful outcome, select relevant skills, complete authorized work,
+verify current sources, refine the actual artifact, and report evidence and remaining gates.
+It covers human agency, privacy, rights, resource stewardship and bounded proactivity.
+Repository identity, brand, canon, build commands and release gates remain local.
+
+[Pinned contract](https://github.com/frankxai/Starlight-Intelligence-System/blob/794db1e51a55a128816f7aa266eb0ac1dbd452c3/docs/architecture/agents-md/band-a.md)
+· [Projection and verification](https://github.com/frankxai/Starlight-Intelligence-System/blob/794db1e51a55a128816f7aa266eb0ac1dbd452c3/docs/architecture/AGENTS-MD-CONTRACT.md)
+
+These files supply operating guidance. They do not activate an agent, grant tool permissions,
+schedule recurring work, certify compliance or prove a live capability.
+
+<!-- STARLIGHT:OPERATING:END -->
