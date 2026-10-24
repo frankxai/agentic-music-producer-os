@@ -68,7 +68,14 @@ DURATION_TYPE = {
     1: "16th",
 }
 ABC_LEN = {16: "1", 8: "2", 4: "4", 2: "8", 1: "16"}
-GUITAR_OPEN = [("E", 4, 64), ("B", 3, 59), ("G", 3, 55), ("D", 3, 50), ("A", 2, 45), ("E", 2, 40)]
+GUITAR_OPEN = [
+    ("E", 4, 64),
+    ("B", 3, 59),
+    ("G", 3, 55),
+    ("D", 3, 50),
+    ("A", 2, 45),
+    ("E", 2, 40),
+]
 TICKS_PER_Q = 480
 DIVISIONS = 4
 NOTE_RE = re.compile(
@@ -156,7 +163,11 @@ def midi_number(pitch: str) -> int:
     match = re.fullmatch(r"([A-Ga-g])([#bB]?)(\d)", pitch)
     if not match:
         raise ValueError(f"invalid pitch: {pitch}")
-    letter, accidental, octave = match.group(1).upper(), match.group(2), int(match.group(3))
+    letter, accidental, octave = (
+        match.group(1).upper(),
+        match.group(2),
+        int(match.group(3)),
+    )
     token = letter + accidental.upper().replace("B", "B")
     if accidental == "b":
         token = letter + "B"
@@ -190,13 +201,19 @@ def parse_note_token(token: str, default_velocity: int = 72) -> NoteEvent:
         velocity = max(1, min(127, int(match.group("vel")[1:])))
     body = token.strip()
     if body.startswith("r"):
-        return NoteEvent(pitches=[], divisions=duration, dotted=dotted, velocity=velocity, rest=True)
+        return NoteEvent(
+            pitches=[], divisions=duration, dotted=dotted, velocity=velocity, rest=True
+        )
     if body.startswith("["):
         inner = body[1 : body.index("]")]
-        pitches = [normalize_pitch(item) for item in re.findall(r"[A-Ga-g](?:[#bB])?\d", inner)]
+        pitches = [
+            normalize_pitch(item) for item in re.findall(r"[A-Ga-g](?:[#bB])?\d", inner)
+        ]
         if not pitches:
             raise ValueError(f"empty chord: {token}")
-        return NoteEvent(pitches=pitches, divisions=duration, dotted=dotted, velocity=velocity)
+        return NoteEvent(
+            pitches=pitches, divisions=duration, dotted=dotted, velocity=velocity
+        )
     pitch_match = NOTE_RE.match(body)
     if not pitch_match or not pitch_match.group("pitch"):
         raise ValueError(f"invalid note token: {token}")
@@ -210,7 +227,9 @@ def parse_note_token(token: str, default_velocity: int = 72) -> NoteEvent:
 
 def parse_voice_body(body: str, default_velocity: int = 72) -> list[NoteEvent]:
     tokens = [item for item in body.replace("|", " ").split() if item]
-    return [parse_note_token(token, default_velocity=default_velocity) for token in tokens]
+    return [
+        parse_note_token(token, default_velocity=default_velocity) for token in tokens
+    ]
 
 
 def parse_score_text(text: str) -> Score:
@@ -326,7 +345,9 @@ def key_fifths(key: str) -> tuple[int, str]:
         "eb major": (-3, "major"),
         "c minor": (-3, "minor"),
     }
-    return table.get(key.casefold(), (0, "major" if "major" in key.casefold() else "minor"))
+    return table.get(
+        key.casefold(), (0, "major" if "major" in key.casefold() else "minor")
+    )
 
 
 def _vlq(value: int) -> bytes:
@@ -381,7 +402,9 @@ def _part_track(part: Part, channel: int, program: int) -> bytes:
                 if not event.rest:
                     for pitch in event.pitches:
                         note = midi_number(pitch)
-                        voice_events.append((offset, bytes([0x90 | channel, note, event.velocity])))
+                        voice_events.append(
+                            (offset, bytes([0x90 | channel, note, event.velocity]))
+                        )
                         voice_events.append(
                             (offset + event.ticks, bytes([0x80 | channel, note, 0]))
                         )
@@ -422,26 +445,42 @@ def write_musicxml(score: Score, path: Path) -> Path:
             voices = list(measure.voices.items())
             for voice_index, (voice_name, events) in enumerate(voices):
                 if voice_index:
-                    notes_xml.append("      <backup><duration>{}</duration></backup>".format(beats_per_measure(score.time)))
-                voice_id = 1 if voice_name == "RH" else 2 if voice_name == "LH" else voice_index + 1
+                    notes_xml.append(
+                        "      <backup><duration>{}</duration></backup>".format(
+                            beats_per_measure(score.time)
+                        )
+                    )
+                voice_id = (
+                    1
+                    if voice_name == "RH"
+                    else 2 if voice_name == "LH" else voice_index + 1
+                )
                 staff = 1
                 if voice_name == "LH":
                     staff = 2
                 for event in events:
-                    notes_xml.append(_musicxml_event(event, voice_id, staff, part.instrument))
+                    notes_xml.append(
+                        _musicxml_event(event, voice_id, staff, part.instrument)
+                    )
             if "LH" in measure.voices and measure.number == 1:
-                attrs = attrs.replace(
-                    "</clef>",
-                    '</clef>\n        <staves>2</staves>\n        <clef number="1"><sign>G</sign><line>2</line></clef>\n        <clef number="2"><sign>F</sign><line>4</line></clef>',
-                    1,
-                ) if "<staves>" not in attrs else attrs
+                attrs = (
+                    attrs.replace(
+                        "</clef>",
+                        '</clef>\n        <staves>2</staves>\n        <clef number="1"><sign>G</sign><line>2</line></clef>\n        <clef number="2"><sign>F</sign><line>4</line></clef>',
+                        1,
+                    )
+                    if "<staves>" not in attrs
+                    else attrs
+                )
                 if "<staves>" not in attrs:
                     attrs = attrs.replace(
                         "</attributes>",
                         "        <staves>2</staves>\n      </attributes>",
                     )
             measures.append(
-                f'    <measure number="{measure.number}">\n{attrs}\n' + "\n".join(notes_xml) + "\n    </measure>"
+                f'    <measure number="{measure.number}">\n{attrs}\n'
+                + "\n".join(notes_xml)
+                + "\n    </measure>"
             )
         parts_xml.append(f'  <part id="{pid}">\n' + "\n".join(measures) + "\n  </part>")
     xml = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -462,7 +501,7 @@ def write_musicxml(score: Score, path: Path) -> Path:
 def _musicxml_event(event: NoteEvent, voice: int, staff: int, instrument: str) -> str:
     if event.rest:
         return (
-            f'      <note><rest/>'
+            f"      <note><rest/>"
             f"<duration>{event.xml_duration}</duration>"
             f"<voice>{voice}</voice>"
             f"<type>{DURATION_TYPE[event.divisions]}</type>"
@@ -571,7 +610,10 @@ def guitar_position(midi: int) -> tuple[int, int]:
 
 def write_guitar_tab(score: Score, path: Path) -> Path:
     events = _lead_events(score)
-    strings = [["-"] * max(1, sum(2 if event.rest else 3 for event in events)) for _ in range(6)]
+    strings = [
+        ["-"] * max(1, sum(2 if event.rest else 3 for event in events))
+        for _ in range(6)
+    ]
     cursor = 0
     for event in events:
         width = 3 if not event.rest else 2
@@ -609,7 +651,9 @@ def write_piano_sheet(score: Score, path: Path) -> Path:
         "Playable piano reduction. Import the MusicXML into MuseScore 4 for publication engraving.",
         "",
     ]
-    piano = next((part for part in score.parts if part.instrument == "piano"), score.parts[0])
+    piano = next(
+        (part for part in score.parts if part.instrument == "piano"), score.parts[0]
+    )
     for measure in piano.measures:
         rh = _voice_text(measure.voices.get("RH") or measure.voices.get("P") or [])
         lh = _voice_text(measure.voices.get("LH") or [])
@@ -680,7 +724,9 @@ def render_preview_wav(score: Score, path: Path, sample_rate: int = 22050) -> Pa
     seconds_per_tick = 60.0 / (score.tempo * TICKS_PER_Q)
     events: list[tuple[float, float, int, int]] = []
     for part in score.parts:
-        for voice_name in {name for measure in part.measures for name in measure.voices}:
+        for voice_name in {
+            name for measure in part.measures for name in measure.voices
+        }:
             tick = 0
             for measure in part.measures:
                 for event in measure.voices.get(voice_name, []):
@@ -688,7 +734,9 @@ def render_preview_wav(score: Score, path: Path, sample_rate: int = 22050) -> Pa
                     end = (tick + event.ticks) * seconds_per_tick
                     if not event.rest:
                         for pitch in event.pitches:
-                            events.append((start, end, midi_number(pitch), event.velocity))
+                            events.append(
+                                (start, end, midi_number(pitch), event.velocity)
+                            )
                     tick += event.ticks
     duration = max((end for _s, end, _n, _v in events), default=1.0) + 1.2
     n_samples = int(duration * sample_rate)
@@ -705,7 +753,13 @@ def render_preview_wav(score: Score, path: Path, sample_rate: int = 22050) -> Pa
             t = i / sample_rate
             env = math.exp(-t * 2.8) * (1.0 - math.exp(-t * 90.0))
             sample = 0.0
-            for harmonic, weight in ((1, 1.0), (2, 0.35), (3, 0.16), (4, 0.08), (6, 0.04)):
+            for harmonic, weight in (
+                (1, 1.0),
+                (2, 0.35),
+                (3, 0.16),
+                (4, 0.08),
+                (6, 0.04),
+            ):
                 sample += weight * math.sin(2 * math.pi * freq * harmonic * t)
             value = amp * env * sample
             idx = start_i + i
@@ -737,8 +791,12 @@ def compile_score(score: Score, out_dir: Path, preview: bool = False) -> dict[st
         "musicxml": write_musicxml(score, out_dir / f"{_slug(score.title)}.musicxml"),
         "midi": write_midi(score, out_dir / f"{_slug(score.title)}.mid"),
         "abc": write_abc(score, out_dir / f"{_slug(score.title)}.abc"),
-        "piano_sheet": write_piano_sheet(score, out_dir / f"{_slug(score.title)}.piano.txt"),
-        "guitar_tab": write_guitar_tab(score, out_dir / f"{_slug(score.title)}.tab.txt"),
+        "piano_sheet": write_piano_sheet(
+            score, out_dir / f"{_slug(score.title)}.piano.txt"
+        ),
+        "guitar_tab": write_guitar_tab(
+            score, out_dir / f"{_slug(score.title)}.tab.txt"
+        ),
         "lyria_prompt": write_lyria_prompt(score, out_dir / "lyria-prompt.md"),
         "suno_bridge": write_suno_bridge(score, out_dir / "suno-bridge.md"),
     }
@@ -760,7 +818,9 @@ def compile_score(score: Score, out_dir: Path, preview: bool = False) -> dict[st
         wav = render_preview_wav(score, out_dir / f"{_slug(score.title)}.preview.wav")
         artifacts["preview_wav"] = wav
         manifest["artifacts"]["preview_wav"] = str(wav)
-    (out_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    (out_dir / "manifest.json").write_text(
+        json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
+    )
     artifacts["manifest"] = out_dir / "manifest.json"
     return {key: str(value) for key, value in artifacts.items()}
 
