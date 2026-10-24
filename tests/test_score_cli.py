@@ -182,7 +182,7 @@ class TestScorelibComprehensive(unittest.TestCase):
         self.assertEqual(midi_number("F#4"), 66)
 
     def test_midi_number_accidental_B(self):
-        self.assertEqual(midi_number("BB4"), 71)
+        self.assertEqual(midi_number("BB4"), 70)
 
     def test_normalize_pitch_invalid(self):
         from scorelib import normalize_pitch
@@ -421,6 +421,8 @@ class TestScorelibComprehensive(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             path = write_musicxml(score, Path(d) / "test.xml")
             xml = path.read_text(encoding="utf-8")
+            self.assertIn("<voice>2</voice>", xml)
+            self.assertIn("<staff>2</staff>", xml)
             self.assertIn("</score-partwise>", xml)
 
     def test_staves_edge_no_clef(self):

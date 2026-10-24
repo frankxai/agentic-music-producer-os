@@ -169,7 +169,7 @@ def midi_number(pitch: str) -> int:
         int(match.group(3)),
     )
     token = letter + accidental.upper().replace("B", "B")
-    if accidental == "b":
+    if accidental.lower() == "b":
         token = letter + "B"
     elif accidental == "#":
         token = letter + "#"
@@ -185,7 +185,7 @@ def normalize_pitch(pitch: str) -> str:
     letter = match.group(1).upper()
     accidental = match.group(2)
     octave = match.group(3)
-    if accidental == "b":
+    if accidental.lower() == "b":
         accidental = "b"
     return f"{letter}{accidental}{octave}"
 
