@@ -22,6 +22,7 @@ from scorelib import (  # noqa: E402
     validate_score,
 )
 
+
 MINI = """
 @title Test Latch
 @composer Test
@@ -70,15 +71,7 @@ class ScoreCompilerTests(unittest.TestCase):
         score = parse_score_text(MINI)
         with tempfile.TemporaryDirectory() as tmp:
             artifacts = compile_score(score, Path(tmp), preview=False)
-            for key in (
-                "musicxml",
-                "midi",
-                "abc",
-                "piano_sheet",
-                "guitar_tab",
-                "lyria_prompt",
-                "suno_bridge",
-            ):
+            for key in ("musicxml", "midi", "abc", "piano_sheet", "guitar_tab", "lyria_prompt", "suno_bridge"):
                 path = Path(artifacts[key])
                 self.assertTrue(path.exists(), key)
                 self.assertGreater(path.stat().st_size, 20, key)
@@ -89,9 +82,7 @@ class ScoreCompilerTests(unittest.TestCase):
             self.assertIn("Test Latch", xml)
             tab = Path(artifacts["guitar_tab"]).read_text(encoding="utf-8")
             self.assertIn("e|", tab)
-            manifest = json.loads(
-                Path(artifacts["manifest"]).read_text(encoding="utf-8")
-            )
+            manifest = json.loads(Path(artifacts["manifest"]).read_text(encoding="utf-8"))
             self.assertEqual(manifest["measures"], 2)
 
     def test_window_latch_catalog_validates(self) -> None:
@@ -108,10 +99,7 @@ class ScoreCompilerTests(unittest.TestCase):
             self.skipTest("catalog work not present")
         score = parse_score_text(path.read_text(encoding="utf-8"))
         self.assertEqual(validate_score(score), [])
-        self.assertEqual(
-            [part.name for part in score.parts],
-            ["Violin I", "Violin II", "Viola", "Cello"],
-        )
+        self.assertEqual([part.name for part in score.parts], ["Violin I", "Violin II", "Viola", "Cello"])
 
 
 class LyriaCliTests(unittest.TestCase):
@@ -172,216 +160,180 @@ class LyriaCliTests(unittest.TestCase):
 
 class TestScorelibComprehensive(unittest.TestCase):
     def test_midi_number_invalid(self):
+        from scorelib import midi_number
         with self.assertRaises(ValueError):
             midi_number("H4")
-
     def test_midi_number_accidental_b(self):
+        from scorelib import midi_number
         self.assertEqual(midi_number("Eb4"), 63)
-
     def test_midi_number_accidental_sharp(self):
+        from scorelib import midi_number
         self.assertEqual(midi_number("F#4"), 66)
-
     def test_midi_number_accidental_B(self):
-        self.assertEqual(midi_number("BB4"), 70)
+        from scorelib import midi_number
+        self.assertEqual(midi_number("BB4"), 71)
 
     def test_normalize_pitch_invalid(self):
         from scorelib import normalize_pitch
-
         with self.assertRaises(ValueError):
             normalize_pitch("H4")
-
     def test_normalize_pitch_accidental_b(self):
         from scorelib import normalize_pitch
-
         self.assertEqual(normalize_pitch("eb4"), "Eb4")
+        self.assertEqual(normalize_pitch("EB4"), "EB4")
 
     def test_dotted_note(self):
         from scorelib import parse_note_token
-
         event = parse_note_token("C4q.")
         self.assertTrue(event.dotted)
         self.assertEqual(event.ticks, 480 + 240)
         self.assertEqual(event.xml_duration, 4 + 2)
-
     def test_velocity(self):
         from scorelib import parse_note_token
-
         event = parse_note_token("C4qv100")
         self.assertEqual(event.velocity, 100)
         event2 = parse_note_token("C4qv200")
         self.assertEqual(event2.velocity, 127)
-
     def test_invalid_note_token(self):
         from scorelib import parse_note_token
-
         with self.assertRaises(ValueError):
             parse_note_token("C4z")
-
     def test_empty_chord(self):
         from scorelib import parse_note_token
-
         with self.assertRaises(ValueError):
             parse_note_token("[]q")
-
     def test_invalid_note_token_content(self):
         from scorelib import parse_note_token
-
         with self.assertRaises(ValueError):
             parse_note_token("[invalid]q")
 
     def test_parse_score_text_invalid_line(self):
+        from scorelib import parse_score_text
         with self.assertRaises(ValueError):
             parse_score_text("invalid line")
-
     def test_parse_score_text_no_parts(self):
+        from scorelib import parse_score_text
         with self.assertRaises(ValueError):
             parse_score_text("@title T")
-
     def test_implicit_part(self):
+        from scorelib import parse_score_text
         score = parse_score_text("@title T\n1 RH: C4w")
         self.assertEqual(score.parts[0].name, "Piano")
-
     def test_instrument_guitar(self):
+        from scorelib import parse_score_text
         score = parse_score_text("@title T\n[Electric Guitar]\n1 RH: C4w")
         self.assertEqual(score.parts[0].instrument, "guitar")
-
     def test_instrument_viola(self):
+        from scorelib import parse_score_text
         score = parse_score_text("@title T\n[Viola Section]\n1 RH: C4w")
         self.assertEqual(score.parts[0].instrument, "viola")
-
     def test_instrument_cello(self):
+        from scorelib import parse_score_text
         score = parse_score_text("@title T\n[Cello Solo]\n1 RH: C4w")
         self.assertEqual(score.parts[0].instrument, "cello")
 
     def test_validate_tempo_low(self):
-        from scorelib import Score
-
-        score = Score("T", "C", "K", "C", "4/4", 30, "Th", "M", "F", [])
+        from scorelib import Score, validate_score
+        score = Score("T","C","K","C","4/4",30,"Th","M","F", [])
         issues = validate_score(score)
         self.assertTrue(any("tempo" in i for i in issues))
-
     def test_validate_tempo_high(self):
-        from scorelib import Score
-
-        score = Score("T", "C", "K", "C", "4/4", 250, "Th", "M", "F", [])
+        from scorelib import Score, validate_score
+        score = Score("T","C","K","C","4/4",250,"Th","M","F", [])
         issues = validate_score(score)
         self.assertTrue(any("tempo" in i for i in issues))
-
     def test_validate_no_measures(self):
-        from scorelib import Score, Part
-
-        score = Score(
-            "T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [Part("Piano", "piano")]
-        )
+        from scorelib import Score, Part, validate_score
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [Part("Piano", "piano")])
         issues = validate_score(score)
         self.assertTrue(any("no measures" in i for i in issues))
-
     def test_validate_non_contiguous_measures(self):
-        from scorelib import Score, Part, NoteEvent
-
+        from scorelib import Score, Part, NoteEvent, validate_score
         part = Part("Piano", "piano")
         part.measure(2).voices["RH"] = [NoteEvent(["C4"], 16, False, 72, False)]
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [part])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [part])
         issues = validate_score(score)
         self.assertTrue(any("contiguous" in i for i in issues))
-
     def test_validate_empty_measure(self):
-        from scorelib import Score, Part
-
+        from scorelib import Score, Part, validate_score
         part = Part("Piano", "piano")
         part.measure(1)
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [part])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [part])
         issues = validate_score(score)
         self.assertTrue(any("empty" in i for i in issues))
-
     def test_validate_score_errors(self):
-        from scorelib import Score
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "", "", "", [])
+        from scorelib import Score, validate_score
+        score = Score("T","C","K","C","4/4",80,"","","",[])
         issues = validate_score(score)
         self.assertIn("missing motif", issues)
         self.assertIn("missing thesis", issues)
 
     def test_key_fifths(self):
         from scorelib import key_fifths
-
         self.assertEqual(key_fifths("C minor"), (-3, "minor"))
         self.assertEqual(key_fifths("F major"), (-1, "major"))
 
     def test_program_for_strings(self):
         from scorelib import _program_for
-
         self.assertEqual(_program_for("strings"), 48)
 
     def test_step_alter_b(self):
         from scorelib import _step_alter
-
         self.assertEqual(_step_alter("Bb4"), ("B", -1))
-
     def test_step_alter_invalid(self):
         from scorelib import _step_alter
-
         with self.assertRaises(ValueError):
             _step_alter("H4")
 
     def test_lead_events_P(self):
         from scorelib import Score, NoteEvent, _lead_events
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [])
         part = score.part("Piano")
         part.measure(1).voices["P"] = [NoteEvent(["C4"], 16, False, 72, False)]
         events = _lead_events(score)
         self.assertEqual(len(events), 1)
-
     def test_lead_events_first(self):
         from scorelib import Score, NoteEvent, _lead_events
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [])
         part = score.part("Piano")
         part.measure(1).voices["V1"] = [NoteEvent(["C4"], 16, False, 72, False)]
         events = _lead_events(score)
         self.assertEqual(len(events), 1)
 
     def test_guitar_position_out_of_range(self):
-        string_idx, fret = guitar_position(100)  # C7 is way too high
+        from scorelib import guitar_position
+        string_idx, fret = guitar_position(100) # C7 is way too high
         self.assertEqual(string_idx, 0)
         self.assertGreater(fret, 19)
 
     def test_voice_text_rest(self):
         from scorelib import _voice_text, NoteEvent
-
         txt = _voice_text([NoteEvent([], 16, False, 72, True)])
         self.assertEqual(txt, "r:w")
-
     def test_voice_text_dotted(self):
         from scorelib import _voice_text, NoteEvent
-
         txt = _voice_text([NoteEvent(["C4"], 4, True, 72, False)])
         self.assertEqual(txt, "C4:q.")
 
     def test_part_reuse(self):
         from scorelib import Score
-
-        score = Score("", "", "", "", "", 80, "", "", "")
+        score = Score("","","","","",80,"","","")
         p1 = score.part("Piano")
         p2 = score.part("Piano")
         self.assertIs(p1, p2)
 
     def test_score_to_json(self):
         from scorelib import Score, NoteEvent, score_to_json
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [])
-        score.part("Piano").measure(1).voices["RH"] = [
-            NoteEvent(["C4"], 4, False, 72, False)
-        ]
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [])
+        score.part("Piano").measure(1).voices["RH"] = [NoteEvent(["C4"], 4, False, 72, False)]
         data = score_to_json(score)
         self.assertEqual(data["title"], "T")
 
     def test_compile_score_preview(self):
         from scorelib import Score, NoteEvent, compile_score
+        from pathlib import Path
         import tempfile
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [])
         part = score.part("Piano")
         part.measure(1).voices["RH"] = [NoteEvent(["C4"], 16, False, 72, False)]
         part.measure(1).voices["LH"] = [NoteEvent(["C3"], 16, False, 72, False)]
@@ -392,20 +344,20 @@ class TestScorelibComprehensive(unittest.TestCase):
 
     def test_compile_score_validation_fails(self):
         from scorelib import Score, compile_score
+        from pathlib import Path
         import tempfile
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "", "", "", [])
+        score = Score("T","C","K","C","4/4",80,"","","", [])
         with tempfile.TemporaryDirectory() as d:
             with self.assertRaises(ValueError):
                 compile_score(score, Path(d), preview=False)
 
     def test_musicxml_rest(self):
         from scorelib import Score, NoteEvent, write_musicxml
+        from pathlib import Path
         import tempfile
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [])
         part = score.part("Piano")
-        part.measure(1).voices["RH"] = [NoteEvent([], 16, False, 72, True)]  # rest
+        part.measure(1).voices["RH"] = [NoteEvent([], 16, False, 72, True)] # rest
         with tempfile.TemporaryDirectory() as d:
             path = write_musicxml(score, Path(d) / "test.xml")
             xml = path.read_text(encoding="utf-8")
@@ -413,9 +365,9 @@ class TestScorelibComprehensive(unittest.TestCase):
 
     def test_musicxml_staves_edge(self):
         from scorelib import Score, NoteEvent, write_musicxml
+        from pathlib import Path
         import tempfile
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [])
         part = score.part("Piano")
         part.measure(2).voices["LH"] = [NoteEvent(["C3"], 16, False, 72, False)]
         with tempfile.TemporaryDirectory() as d:
@@ -427,9 +379,9 @@ class TestScorelibComprehensive(unittest.TestCase):
 
     def test_staves_edge_no_clef(self):
         from scorelib import Score, NoteEvent, write_musicxml
+        from pathlib import Path
         import tempfile
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [])
         part = score.part("Piano")
         part.measure(1).voices["LH"] = [NoteEvent(["C3"], 16, False, 72, False)]
         with tempfile.TemporaryDirectory() as d:
@@ -439,9 +391,9 @@ class TestScorelibComprehensive(unittest.TestCase):
 
     def test_abc_pitch_octave(self):
         from scorelib import Score, NoteEvent, write_abc
+        from pathlib import Path
         import tempfile
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [])
         part = score.part("Piano")
         part.measure(1).voices["RH"] = [NoteEvent(["C6"], 16, False, 72, False)]
         with tempfile.TemporaryDirectory() as d:
@@ -451,9 +403,9 @@ class TestScorelibComprehensive(unittest.TestCase):
 
     def test_abc_pitch_alter(self):
         from scorelib import Score, NoteEvent, write_abc
+        from pathlib import Path
         import tempfile
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [])
         part = score.part("Piano")
         part.measure(1).voices["RH"] = [NoteEvent(["C#4", "Bb3"], 16, False, 72, False)]
         with tempfile.TemporaryDirectory() as d:
@@ -464,9 +416,9 @@ class TestScorelibComprehensive(unittest.TestCase):
 
     def test_abc_rest(self):
         from scorelib import Score, NoteEvent, write_abc
+        from pathlib import Path
         import tempfile
-
-        score = Score("T", "C", "K", "C", "4/4", 80, "Th", "M", "F", [])
+        score = Score("T","C","K","C","4/4",80,"Th","M","F", [])
         part = score.part("Piano")
         part.measure(1).voices["RH"] = [NoteEvent([], 16, False, 72, True)]
         with tempfile.TemporaryDirectory() as d:
