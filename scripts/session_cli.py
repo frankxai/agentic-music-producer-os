@@ -77,7 +77,10 @@ def _sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _artifact_hashes(session_dir: Path, kind: str) -> dict[str, str]:
+def _artifact_hashes(session_dir: Path, kind: str, output_mode: str = "custom") -> dict[str, str]:
+    if output_mode == "simple":
+        names = ["brief.md", "prompt.md", "hook-cells.json", "review.md"]
+        return {name: _sha256_file(session_dir / name) for name in names}
     names = [
         "brief.md",
         "style-prompt.md",
@@ -178,7 +181,7 @@ def _require_authorization_preflight(
     authorization = _authorization_for(manifest, authorization_id)
     if authorization.get("status") != "preflighted":
         raise RuntimeError("Create authorization must be preflighted before one Create submission")
-    if authorization.get("artifact_hashes") != _artifact_hashes(session_dir, manifest["kind"]):
+    if authorization.get("artifact_hashes") != _artifact_hashes(session_dir, manifest["kind"], manifest.get("output_mode", "custom")):
         raise RuntimeError("Create authorization artifact hashes no longer match the reviewed run")
     return authorization
 
@@ -200,8 +203,13 @@ def initialize_session(
     kind: str,
     brief: str,
     now: datetime | None = None,
+    output_mode: str | None = None,
 ) -> dict[str, Any]:
     """Initialize one production session without inventing creative content."""
+    if output_mode not in {None, "simple", "custom"}:
+        raise ValueError("output_mode must be simple or custom")
+    if output_mode == "simple" and kind == "meditation":
+        raise ValueError("meditation requires the custom script workflow")
     if kind not in VALID_KINDS:
         raise ValueError(f"kind must be one of: {', '.join(sorted(VALID_KINDS))}")
     if not title.strip():
@@ -217,7 +225,7 @@ def initialize_session(
     session_dir.mkdir(parents=True, exist_ok=False)
 
     manifest = {
-        "schema_version": 5,
+        "schema_version": 6 if output_mode == "simple" else 5,
         "id": session_dir.name,
         "title": title.strip(),
         "kind": kind,
@@ -235,8 +243,15 @@ def initialize_session(
         "events": [],
         "generations": [],
     }
+    if output_mode is not None:
+        manifest["output_mode"] = output_mode
     _write_json(session_dir / "manifest.json", manifest)
     (session_dir / "brief.md").write_text(brief.strip() + "\n", encoding="utf-8")
+    if output_mode == "simple":
+        (session_dir / "prompt.md").write_text("", encoding="utf-8")
+        _write_json(session_dir / "hook-cells.json", [])
+        (session_dir / "review.md").write_text("", encoding="utf-8")
+        return {"status": "created", "session_dir": str(session_dir), "manifest": manifest}
     if kind == "song":
         (session_dir / "lyrics.md").write_text("", encoding="utf-8")
     elif kind == "meditation":
@@ -255,6 +270,45 @@ def _has_real_content(path: Path) -> bool:
         return False
     normalized = path.read_text(encoding="utf-8").strip().casefold()
     return normalized not in EMPTY_MARKERS
+
+
+def _validate_simple(session_dir: Path, manifest: dict[str, Any]) -> dict[str, Any]:
+    missing, errors = [], []
+    if manifest.get("schema_version") != 6 or manifest.get("kind") not in {"song", "instrumental"}:
+        errors.append("simple sessions require schema 6 and song or instrumental kind")
+    for name in ("brief.md", "prompt.md", "review.md", "hook-cells.json"):
+        if not _has_real_content(session_dir / name):
+            missing.append(name)
+    prompt = (session_dir / "prompt.md").read_text(encoding="utf-8") if (session_dir / "prompt.md").is_file() else ""
+    if any(re.search(pattern, prompt, flags=re.IGNORECASE) for pattern in IMITATION_PATTERNS):
+        errors.append("prompt contains imitation language")
+    try:
+        cells = json.loads((session_dir / "hook-cells.json").read_text(encoding="utf-8"))
+        if not isinstance(cells, list):
+            raise ValueError("hook cells must be a list")
+        expected = {2, 3} if manifest.get("kind") == "song" else {0}
+        if len(cells) not in expected:
+            errors.append("song requires 2–3 hook cells; instrumental requires none")
+        for cell in cells:
+            if not isinstance(cell, str) or not cell.strip() or "\n" in cell or "\r" in cell:
+                errors.append("hook cells must be nonempty single lines")
+            elif cell not in prompt:
+                errors.append("exact hook cell is missing from prompt")
+    except (OSError, ValueError) as exc:
+        errors.append(f"invalid hook-cells.json: {exc}")
+    review = (session_dir / "review.md").read_text(encoding="utf-8") if (session_dir / "review.md").is_file() else ""
+    for pattern, message in (
+        (r"^SCOPE: prompt\s*$", "review scope must be prompt"),
+        (r"^REVIEWER: [^\n\r]+$", "review requires named reviewer"),
+        (r"^EVIDENCE: [^\n\r]+$", "review requires evidence"),
+        (r"^VERDICT: PASS\s*$", "review verdict must be PASS"),
+        (r"^HARD VETOES: none\s*$", "review has unresolved hard vetoes"),
+    ):
+        if not re.search(pattern, review, re.MULTILINE):
+            errors.append(message)
+    ready = not missing and not errors
+    return {"status": "ready" if ready else "invalid", "session_dir": str(session_dir),
+            "ready_for_suno": ready, "missing": missing, "errors": errors}
 
 
 def validate_session(session_dir: Path) -> dict[str, Any]:
@@ -284,6 +338,11 @@ def validate_session(session_dir: Path) -> dict[str, Any]:
             "errors": [f"manifest.json is invalid JSON: {exc}"],
         }
 
+    if manifest.get("output_mode") == "simple":
+        return _validate_simple(session_dir, manifest)
+    if manifest.get("output_mode", "custom") != "custom":
+        return {"status": "invalid", "session_dir": str(session_dir), "ready_for_suno": False,
+                "missing": [], "errors": ["unsupported output mode"]}
     kind = manifest.get("kind")
     if kind not in VALID_KINDS:
         errors.append("manifest kind is invalid")
@@ -436,7 +495,7 @@ def authorize_create(
         "allowed_operation": "create",
         "action_budget": 1,
         "expires_at": expiry.astimezone(timezone.utc).isoformat(),
-        "artifact_hashes": _artifact_hashes(session_dir, manifest["kind"]),
+        "artifact_hashes": _artifact_hashes(session_dir, manifest["kind"], manifest.get("output_mode", "custom")),
         "status": "authorized",
         "consumed_at": None,
     }
@@ -462,8 +521,8 @@ def record_browser_preflight(
     normalized_hash = ui_evidence_sha256.strip().casefold()
     if not normalized_model:
         raise ValueError("model_label must not be empty")
-    if normalized_mode != "custom":
-        raise ValueError("mode must be custom")
+    if normalized_mode not in {"custom", "simple"}:
+        raise ValueError("mode must be custom or simple")
     if not normalized_ref:
         raise ValueError("ui_evidence_ref must not be empty")
     if not re.fullmatch(r"[0-9a-f]{64}", normalized_hash):
@@ -472,15 +531,17 @@ def record_browser_preflight(
     session_dir = Path(session_dir)
     _require_ready(session_dir)
     manifest_path, manifest = _load_manifest(session_dir)
+    if normalized_mode != manifest.get("output_mode", "custom"):
+        raise RuntimeError("mode does not match reviewed session")
     authorization = _authorization_for(manifest, authorization_id.strip())
     if manifest["kind"] == "song" and not (
         isinstance(manifest.get("voice_observation"), dict)
-        and manifest["voice_observation"].get("state") == "selected"
+        and manifest["voice_observation"].get("state") in ({"selected", "not_applicable"} if normalized_mode == "simple" else {"selected"})
     ):
         raise RuntimeError("vocal song requires observed Voice/Persona selection before preflight")
     if authorization.get("status") != "authorized":
         raise RuntimeError("Create authorization is not available for preflight")
-    if authorization.get("artifact_hashes") != _artifact_hashes(session_dir, manifest["kind"]):
+    if authorization.get("artifact_hashes") != _artifact_hashes(session_dir, manifest["kind"], manifest.get("output_mode", "custom")):
         raise RuntimeError("Create authorization artifact hashes no longer match the reviewed run")
     if datetime.fromisoformat(str(authorization["expires_at"])) <= datetime.fromisoformat(_timestamp(now)):
         raise RuntimeError("Create authorization has expired")
@@ -520,7 +581,7 @@ def record_create_submission(
             "id": authorization_id.strip(),
             "authorization_id": authorization_id.strip(),
             "model_label": authorization["preflight"]["model_label"],
-            "mode": "custom",
+            "mode": authorization["preflight"]["mode"],
             "create_click_count": 1,
             "status": "awaiting_results",
             "submitted_at": timestamp,
@@ -561,8 +622,8 @@ def record_generation(
         raise ValueError("model_label must not be empty")
     if not normalized_take_title:
         raise ValueError("take_title must not be empty")
-    if normalized_mode != "custom":
-        raise ValueError("mode must be custom")
+    if normalized_mode not in {"custom", "simple"}:
+        raise ValueError("mode must be custom or simple")
     if take < 1:
         raise ValueError("take must be at least 1")
     if url_id != normalized_id:
@@ -571,10 +632,12 @@ def record_generation(
     session_dir = Path(session_dir)
     _require_ready(session_dir)
     manifest_path, manifest = _load_manifest(session_dir)
+    if normalized_mode != manifest.get("output_mode", "custom"):
+        raise RuntimeError("mode does not match reviewed session")
     authorization = _authorization_for(manifest, normalized_action_id)
     if authorization.get("status") != "submitted":
         raise RuntimeError("Create authorization must be consumed by a recorded Create submission")
-    if authorization.get("artifact_hashes") != _artifact_hashes(session_dir, manifest["kind"]):
+    if authorization.get("artifact_hashes") != _artifact_hashes(session_dir, manifest["kind"], manifest.get("output_mode", "custom")):
         raise RuntimeError("Create authorization artifact hashes no longer match the reviewed run")
     if additional_action_authorized:
         raise ValueError("additional-action Boolean is not a valid Create authorization")
@@ -675,7 +738,9 @@ def record_voice_observation(
     if normalized_state == "selected" and label.casefold() not in options_observed.casefold():
         raise ValueError("selected Voice/Persona label must appear in the visible options observation")
     manifest_path, manifest = _load_manifest(Path(session_dir))
-    if manifest["kind"] == "song" and normalized_state != "selected":
+    if manifest["kind"] == "song" and normalized_state != "selected" and not (
+        manifest.get("output_mode") == "simple" and normalized_state == "not_applicable"
+    ):
         raise RuntimeError("vocal song requires an observed selected Voice/Persona before Create")
     receipt = {
         "state": normalized_state,
@@ -904,6 +969,7 @@ def _parser() -> argparse.ArgumentParser:
     init.add_argument("--title", required=True)
     init.add_argument("--kind", choices=sorted(VALID_KINDS), required=True)
     init.add_argument("--brief", required=True)
+    init.add_argument("--output-mode", choices=["simple", "custom"], help="Default: simple for songs/instrumentals; custom for meditation")
 
     validate = commands.add_parser("validate", help="Validate a session for Suno")
     validate.add_argument("session_dir", type=Path)
@@ -918,7 +984,7 @@ def _parser() -> argparse.ArgumentParser:
     preflight.add_argument("session_dir", type=Path)
     preflight.add_argument("--authorization-id", required=True)
     preflight.add_argument("--model-label", required=True)
-    preflight.add_argument("--mode", default="custom", choices=["custom"])
+    preflight.add_argument("--mode", default="custom", choices=["custom", "simple"])
     preflight.add_argument("--ui-evidence-ref", required=True)
     preflight.add_argument("--ui-evidence-sha256", required=True)
 
@@ -935,7 +1001,7 @@ def _parser() -> argparse.ArgumentParser:
     record.add_argument("--action-id", dest="create_action_id", required=True)
     record.add_argument("--model-label", required=True)
     record.add_argument("--take-title", required=True)
-    record.add_argument("--mode", default="custom", choices=["custom"])
+    record.add_argument("--mode", default="custom", choices=["custom", "simple"])
 
     voice = commands.add_parser("record-voice", help="Record observed Suno Voice/Persona selection facts")
     voice.add_argument("session_dir", type=Path)
@@ -984,7 +1050,8 @@ def _parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = _parser().parse_args()
     if args.command == "init":
-        result = initialize_session(args.workspace, args.title, args.kind, args.brief)
+        result = initialize_session(args.workspace, args.title, args.kind, args.brief,
+                                    output_mode=args.output_mode or ("custom" if args.kind == "meditation" else "simple"))
     elif args.command == "validate":
         result = validate_session(args.session_dir)
     elif args.command == "authorize-create":
@@ -1055,3 +1122,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

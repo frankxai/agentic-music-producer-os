@@ -1,148 +1,21 @@
 ---
 name: music-producer-os
-description: Orchestrate original songs, score-first piano/orchestra works, instrumentals, or guided meditations from brief through craft, notation, Suno/Lyria packets, taste review, and verified generation. Use for "make a song", "compose piano", "orchestra", "sheets/tabs", "produce this", "create in Suno", "Lyria", "guided meditation".
-version: 0.1.0
-tags: [music, production, suno, songwriting, meditation, orchestration]
+description: "Compose, plan, revise and coordinate original songs, scores, instrumentals or spoken guidance; route simple prompts, explicit full lyrics, notation and authorized generation through relevant craft and evidence gates."
 ---
 
-# Music Producer OS
+# Music Producer Os
 
-Use this as the entry point for compound music work. It coordinates specialist skills and keeps one compact production record; it does not spawn a large swarm by default.
+Read `docs/MUSIC-FUNDAMENTALS.md`, `docs/MUSIC-REGULATORS.md` and the matching entry in `docs/WORKFLOW-CONTRACTS.json` from the repository root. If installed without the checkout, resolve those same paths at https://github.com/frankxai/agentic-music-producer-os; do not invent execution.
 
-## Trigger contract
+For a prompt-only request, deliver the paste block directly; keep internal review and orchestration out of the answer unless requested or a material blocker needs explanation.
 
-Activate when the user asks to:
-- make, write, compose, produce, arrange, or generate a song;
-- turn an idea, poem, voice note, passage, or emotional state into music;
-- create a guided meditation or spoken-word music piece;
-- build Suno prompts or generate the result in the logged-in Suno account;
-- review or improve a draft before spending more Suno credits.
+1. Recover the current request and available project context. Do not claim access to unavailable chats. Keep global craft, user preferences, project canon and this song's contract separate.
+2. Choose the output lane. For a normal song prompt, return one natural-language code block per song with 2–3 exact loop lines and let the provider write the remainder. Use no full lyrics unless requested. Instrumentals have no lyric cells. Explicit full lyrics use Custom Mode. Sheets/tabs/piano/orchestra route to `score-composer`; notation is canon. Guidance routes to `guided-meditation-composer`, normally with a separate instrumental bed.
+3. Establish listener moment, emotional intention, focal idea and one useful constraint. Apply only relevant fundamentals. Route prompt packaging to `suno-prompt-architect`; full lyric work to `lyric-composer`; production decisions to `suno-ai-mastery`.
+4. Open a session when durable production tracking is needed: `python scripts/session_cli.py init --workspace <actual-workspace> --title <title> --kind song --brief <brief> --output-mode simple`. Save exact approved prompt bytes in `prompt.md`, hook lines as a JSON array in `hook-cells.json`, and the evidence review in `review.md`. For Custom Mode, pass `--output-mode custom`; its schema-5 adapter still requires its full packet and legacy review fields. Read `docs/SESSION-MODES.md` before operating.
+5. Use `music-taste-review` for scoped critique and run `session_cli.py validate`. Prompt PASS means executable prompt, never listened quality or release clearance.
+6. Drafting authorizes creative work. An explicit generation request authorizes one bounded Create action. Load `suno-browser-operator`, observe current model/mode/cost, bind the approved artifacts to a single-use authorization and reconcile uncertain submissions. Record actual results only; no promised take count, blind retry or invented links.
+7. After authorized approved-channel export, hash the asset and obtain actual listening. Choose KEEP/ITERATE/CUT with evidence; choose one revision variable. Release needs technical, rights, destination and publication decisions independently.
+8. Save a concise recap: exact decisions and versions, available assets, unresolved holds and one next action. Learn from actual reported use and verdicts with context. Do not promote a local preference into a universal rule.
 
-## Autonomy and credit policy
-
-- "Write/draft/prompt" means create the complete creative packet but do not click Suno Create.
-- "Generate/create it in Suno" authorizes browser execution and **one Create action**. Suno normally returns two takes from that action.
-- Additional Create actions, public sharing, publishing, downloads, uploads, covers, extensions, or remasters require a follow-up instruction.
-- Never interact with payment, subscription, password, passkey, 2FA, or permission dialogs.
-
-## Token-efficient pipeline
-
-### 1. Recover intent before asking
-
-Use the user's message, current session, `session_search`, and accessible local knowledge. Ask only for a missing fact that materially changes the work. Otherwise make an explicit artistic assumption and move.
-
-Classify:
-- `score`: piano, chamber, orchestra, or guitar works that must exist as notation;
-- `song`: sung lyrics and full production;
-- `instrumental`: no vocal text required;
-- `meditation`: preferred lane is spoken script + separate instrumental bed;
-- `spoken-suno`: experimental spoken-word performance inside Suno.
-
-If the user wants sheets, tabs, orchestra, piano works, volume of actual compositions, Lyria plus Suno, or live playing, load `score-composer` first. The score is the canon.
-
-### 2. Open a durable run
-
-From the canonical checkout:
-
-```bash
-python ~/agentic-music-producer-os/scripts/session_cli.py init \
-  --title "<working title>" --kind <song|instrumental|meditation> \
-  --brief "<one-paragraph emotional and functional brief>"
-```
-
-Capture the returned `session_dir`. All later artifacts go there:
-- `brief.md`
-- `lyrics.md` for songs, or `script.md` for meditations
-- `style-prompt.md`
-- `review.md`
-- `manifest.json`
-
-If the canonical checkout is elsewhere, locate it first; do not invent a path.
-
-### 3. Build the one-page creative brief
-
-Write these decisions into `brief.md`:
-- **Listener moment:** where, when, and why this is heard.
-- **Emotional contract:** starting state → pressure/turn → ending state.
-- **Point of view:** who speaks to whom; what is withheld until later.
-- **Core image:** one concrete image system, not a bag of metaphors.
-- **Hook premise:** the phrase or melodic idea the listener carries out.
-- **Sonic thesis:** genre family, pulse/BPM range, harmonic color, focal instruments, vocal persona.
-- **Energy map:** section-by-section intensity from 1–10.
-- **Negative space:** what the production deliberately excludes.
-
-### 4. Compose with the relevant specialist
-
-- Piano/orchestra/sheets/tabs: load `score-composer` and compile `catalog/<slug>/score.txt` before any audio lane.
-- Song lyrics: load `lyric-composer`.
-- Guided meditation: load `guided-meditation-composer`.
-- Instrumental/song production direction: load `suno-ai-mastery`.
-- Suno fields: load `suno-prompt-architect`.
-- Lyria 3: compile the score, then `scripts/lyria_cli.py`. Do not generate without an explicit request and a process-level Gemini key.
-
-Do one strong full draft. Use a second alternate only for the hook, title, or sonic thesis when a real decision remains.
-
-### 5. Build the Suno packet
-
-Write `style-prompt.md` with:
-- title;
-- newest stable model visible in UI (selected later, not guessed);
-- Custom Mode on;
-- style prompt;
-- Exclude Styles;
-- vocal persona or `instrumental, no vocals`;
-- production/dynamic arc;
-- lyrics with structural and performance tags.
-
-Do not use named artists, copyrighted lyric fragments, trademarked style shortcuts, or voice-cloning language.
-
-### 6. Taste gate
-
-Load `music-taste-review`. Score the packet. Revise until:
-- weighted total ≥ 8.5/10 for songs/instrumentals or ≥ 9.0/10 for meditations;
-- no axis < 7.5;
-- no hard veto.
-
-Write the scored review and exact revisions to `review.md`. Validate:
-
-```bash
-python ~/agentic-music-producer-os/scripts/session_cli.py validate <session_dir>
-```
-
-Do not open Suno until `ready_for_suno` is true.
-
-### 7. Generate only when requested
-
-Load `suno-browser-operator`. Use the user's logged-in Chrome in the background. One Create action is the default. Verify the resulting two take cards, capture their actual Suno IDs/URLs, and record each:
-
-```bash
-python ~/agentic-music-producer-os/scripts/session_cli.py record <session_dir> \
-  --url "<verified-suno-url>" --id "<verified-id>" --take 1 \
-  --action-id "<one-local-create-receipt-id>" --model-label "<visible-model-label>" \
-  --take-title "<visible-take-title>" \
-  --note "<first-listen observation>"
-```
-
-Use the same action ID and model label for the second take from that Create click. Never pass `--additional-action-authorized` unless the operator issued a separate instruction authorizing another Create action.
-
-If login is absent, stop with the exact page state and ask the user to sign in. Never type credentials.
-
-### 8. Report like a producer
-
-Return:
-1. the central creative decision in one sentence;
-2. title + style packet location;
-3. verified Suno take links if created;
-4. concise A&R notes: what works, what to listen for, and the single best next move.
-
-Do not claim audio quality, BPM accuracy, pronunciation, or successful generation without observing it.
-
-## Escalation
-
-Use delegation only when independent expertise materially improves the output (for example, lyric craft and meditation-safety review in parallel). Do not run a standing seven-agent swarm for a normal track.
-
-Starlight Swarm is a thin bus. If this machine genuinely lacks a YogaBook-only input, send one line naming the artifact and acceptance criterion to the YogaBook bot; continue deep work in the home DM/session. Never post progress chatter or invite dual-gateway dialogue.
-
-## Evidence and factory integration
-
-Use `docs/MUSIC-FUNDAMENTALS.md`, `docs/PROVIDER-CAPABILITIES.md` and `docs/MUSIC-FACTORY-CONTRACT.md` for shared craft and provider selection. Keep this host's session/album receipts and one-gateway discipline. Any existing taste score is a subjective text-review aid with named reviewer and rationale; it never certifies unheard audio, rights or commercial performance. Generation, export, listening, technical QA and release remain separate evidenced stages. Verify visible model and credits before Create; never blindly repeat an uncertain submission.
+Use a compact team. Delegate only a bounded independent question when useful, with appropriate evidence and a clear owner. Do not activate a standing swarm for a simple prompt. Keep existing one-gateway machine discipline. Do not infer deployment, scheduling or account connection from files in this repository.

@@ -31,7 +31,7 @@ Use this order so the model receives priorities clearly:
 Genre/fusion; emotional state and energy; tempo/meter/pocket; focal instrumentation; vocal persona and delivery; section-to-section dynamic journey; production and spatial character; ending behavior.
 ```
 
-Name 3–6 important instruments. Over-specification makes arrangements muddy and generic.
+Name only the focal and supporting roles needed by the brief. Instrument count is not a quality rule.
 
 ## No named-artist shortcuts
 
@@ -66,7 +66,7 @@ Map energy by section. A useful default is not a rule:
 Intro 2 → Verse 4 → Pre 6 → Chorus 8 → Verse 5 → Bridge 3/7 → Final Chorus 9 → Outro 2
 ```
 
-Contrast is the engine: sparse/dense, dry/wet, low/high register, solo/stacked, held/pulsed, silence/impact. The final chorus should change because the story changed.
+Contrast is the engine: sparse/dense, dry/wet, low/high register, solo/stacked, held/pulsed, silence/impact. Change a final chorus only when the emotional or functional intent benefits; a smaller ending may be right.
 
 ## Structural and performance tags
 
@@ -92,7 +92,7 @@ Do not use exclusions to negate half the prompt. If the positive direction is un
 
 ## Controlled iteration
 
-1. **One Create action** yields the initial take pair.
+1. **One authorized Create action** may return multiple takes; record the actual count.
 2. Review both against the same brief; do not move the goalposts.
 3. Name the strongest 15–30 seconds and the single largest failure.
 4. Choose one operation: regenerate prompt, replace section, extend, cover, or remaster.
@@ -121,3 +121,6 @@ Read the relevant modules in `docs/MUSIC-FUNDAMENTALS.md`, then `docs/PROVIDER-C
 Suno v6 is the documented baseline checked 2026-10-01; capture the actual account model, settings, limits and credit cost before operating. No official public generation API was verified. Preserve the approved lyrics across adapters. Score/text analysis and a prompt review do not prove audio quality. Record real listening and measurements separately; keep unknown values null. Personal preferences and artist canon remain in their owner project.
 
 Resolve `docs/...` paths from the repository root, not from the skill folder. If using only this skill outside a checkout, read the same named documents from the canonical public source.
+
+
+Read `docs/MUSIC-REGULATORS.md` before execution/release. Default song prompts use one Simple Mode paragraph and 2–3 exact hook cells; full Custom lyrics require an explicit request. The documented model baseline is historical, not a current-account observation.

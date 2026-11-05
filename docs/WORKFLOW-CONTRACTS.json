@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-09",
+  "rules": "docs/MUSIC-REGULATORS.md",
+  "fundamentals": "docs/MUSIC-FUNDAMENTALS.md",
+  "workflows": [
+    {
+      "id": "prompt",
+      "entry": "music-producer-os",
+      "specialists": [
+        "suno-prompt-architect",
+        "music-taste-review"
+      ],
+      "mode": "simple",
+      "outputs": [
+        "brief.md",
+        "prompt.md",
+        "hook-cells.json",
+        "review.md"
+      ],
+      "review_scope": "prompt",
+      "next": "generation"
+    },
+    {
+      "id": "custom-song",
+      "entry": "music-producer-os",
+      "specialists": [
+        "lyric-composer",
+        "suno-prompt-architect",
+        "music-taste-review"
+      ],
+      "mode": "custom",
+      "outputs": [
+        "lyrics.md",
+        "style-prompt.md",
+        "composition-map.md",
+        "vocal-casting.md",
+        "audiovisual-hook-board.md",
+        "review.md"
+      ],
+      "review_scope": "text",
+      "next": "generation"
+    },
+    {
+      "id": "score",
+      "entry": "score-composer",
+      "specialists": [
+        "music-taste-review"
+      ],
+      "mode": "score",
+      "outputs": [
+        "score.txt"
+      ],
+      "review_scope": "score",
+      "next": "interpretation"
+    },
+    {
+      "id": "interpretation",
+      "entry": "score-composer",
+      "specialists": [
+        "suno-prompt-architect"
+      ],
+      "mode": "adapter",
+      "outputs": [
+        "score-bound-preview-or-provider-packet"
+      ],
+      "review_scope": "score",
+      "next": "generation"
+    },
+    {
+      "id": "meditation",
+      "entry": "guided-meditation-composer",
+      "specialists": [
+        "suno-ai-mastery",
+        "music-taste-review"
+      ],
+      "mode": "custom",
+      "outputs": [
+        "script.md",
+        "style-prompt.md",
+        "review.md"
+      ],
+      "review_scope": "text",
+      "next": "generation"
+    },
+    {
+      "id": "generation",
+      "entry": "suno-browser-operator",
+      "specialists": [],
+      "mode": "observed",
+      "outputs": [
+        "authorization",
+        "preflight",
+        "submission",
+        "observed-take-receipts"
+      ],
+      "review_scope": "execution",
+      "next": "listening"
+    },
+    {
+      "id": "listening",
+      "entry": "music-taste-review",
+      "specialists": [],
+      "mode": "audio",
+      "outputs": [
+        "asset-bound-listening-review"
+      ],
+      "review_scope": "audio",
+      "next": "release-review"
+    },
+    {
+      "id": "release-review",
+      "entry": "music-producer-os",
+      "specialists": [],
+      "mode": "evidence",
+      "outputs": [
+        "technical-qa",
+        "rights-register",
+        "destination-gates",
+        "operator-decision"
+      ],
+      "review_scope": "release",
+      "next": "recap"
+    },
+    {
+      "id": "recap",
+      "entry": "music-producer-os",
+      "specialists": [],
+      "mode": "record",
+      "outputs": [
+        "decisions",
+        "holds",
+        "next-action"
+      ],
+      "review_scope": "session",
+      "next": null
+    }
+  ]
+}
