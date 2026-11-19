@@ -1,0 +1,29 @@
+{
+  "name": "music-producer-os",
+  "source_of_truth": "agents/<id>/ROLE.md",
+  "roles": [
+    "producer-orchestrator",
+    "score-captain",
+    "lyric-captain",
+    "meditation-captain",
+    "suno-craft",
+    "taste-ar",
+    "browser-operator",
+    "qa-listener",
+    "dam-release",
+    "visual-director",
+    "packaging-engineer",
+    "independent-reviewer"
+  ],
+  "cli_adapters": {
+    "claude": [".claude/agents/producer-orchestrator.md", ".claude/agents/score-captain.md", ".claude/agents/taste-ar.md"],
+    "codex": "project subset; do not copy the full roster",
+    "opencode": "plan / build / review",
+    "cursor": "domain rules, not N agents",
+    "hermes": "profile music-producer, gateway stopped"
+  },
+  "gateway": {
+    "default_running": true,
+    "music_producer_stopped": true
+  }
+}

@@ -1,0 +1,79 @@
+diff --git a/README.md b/README.md
+index bc58ccd..58bca16 100644
+--- a/README.md
++++ b/README.md
+@@ -23,7 +23,17 @@ Telegram brief → compose → taste gate → Suno Custom Mode → two verified
+ 
+ The existing default Hermes gateway remains the **single Telegram front door**. The dedicated music profile is installed for focused local sessions, but its gateway stays stopped. This avoids duplicate polling, shared-channel echo loops, and token waste.
+ 
+-See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
++See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) and [`docs/OPERATING-PLAN.md`](docs/OPERATING-PLAN.md).
++
++## Public craft pack (skills.sh)
++
++Craft skills only — no logged-in Chrome operator:
++
++```bash
++npx skills add frankxai/agentic-music-producer-os
++```
++
++Contract: [`SKILLPACK.md`](SKILLPACK.md). `suno-browser-operator` stays in-repo for operator machines and is excluded from the public craft SKU.
+ 
+ ## Install on this machine
+ 
+@@ -157,11 +167,20 @@ The built-in Hermes `songwriting-and-ai-music` skill remains useful; this pack a
+ 
+ ## Ecosystem
+ 
+-- [`agentic-music-os`](https://github.com/frankxai/agentic-music-os) — general music operation layer.
+-- [`music-intelligence-systems`](https://github.com/frankxai/music-intelligence-systems) — composition/production/catalog substrate.
+-- [`agentic-creator-os`](https://github.com/frankxai/agentic-creator-os) — reusable creator skills and agents.
+-- [`suno-mcp-server`](https://github.com/frankxai/suno-mcp-server) — future MCP generation backend; currently a scaffold, not claimed as production runtime.
++Jobs for every music repo (none archived) are in [`docs/OPERATING-PLAN.md`](docs/OPERATING-PLAN.md). Short map:
++
++- [`agentic-music-os`](https://github.com/frankxai/agentic-music-os) — SIP public charter; runtime stays here.
++- [`music-intelligence-systems`](https://github.com/frankxai/music-intelligence-systems) — theory/schema substrate, not a second producer.
++- [`vibe-os`](https://github.com/frankxai/vibe-os) — state-change companion (aesthetic presets only).
++- [`suno-library-archiver`](https://github.com/frankxai/suno-library-archiver) — DAM backend for retain/hash.
++- [`suno-mcp-server`](https://github.com/frankxai/suno-mcp-server) — evolves into local **receipts** MCP over these CLIs; not an unofficial generate API.
++- [`starlight-creator-mcp`](https://github.com/frankxai/starlight-creator-mcp) — BYOK visual/publishing pair after KEEP.
++- [`creator-skills`](https://github.com/frankxai/creator-skills) — ACOS pack; music rows point here.
++- [`agentic-creator-os`](https://github.com/frankxai/agentic-creator-os) — `/create-music` overlay, not a third lyric runtime.
++- [`awesome-music-agent-skills`](https://github.com/frankxai/awesome-music-agent-skills) — web-first catalog only.
+ 
+ ## Status
+ 
+ **v0.1 machine-ready distribution.** Unit-tested local installer and session receipt tooling; browser readiness is verified separately against each machine's interactive Chrome/Suno session.
++
++Operating plan targets T1–T10 (craft pack, score factory, receipts MCP, proven KEEP, label, marketplace) are defined with falsifiable criteria in [`docs/OPERATING-PLAN.md`](docs/OPERATING-PLAN.md).
+diff --git a/distribution.yaml b/distribution.yaml
+index 10a0310..65ac261 100644
+--- a/distribution.yaml
++++ b/distribution.yaml
+@@ -9,9 +9,13 @@ distribution_owned:
+   - skills
+   - scripts
+   - docs
++  - agents
+   - README.md
+   - AGENTS.md
+   - CLAUDE.md
++  - SKILLPACK.md
++  - GEMINI.md
++  - .agent-harness.json
+   - distribution.yaml
+ 
+ env_requires: []
+diff --git a/docs/ARCHITECTURE.md b/docs/ARCHITECTURE.md
+index c6df610..fe14c34 100644
+--- a/docs/ARCHITECTURE.md
++++ b/docs/ARCHITECTURE.md
+@@ -4,6 +4,8 @@
+ 
+ Agentic Music Producer OS is a **Hermes profile distribution plus portable skill pack**, not a new daemon and not a Hermes fork.
+ 
++Estate jobs, multi-agent contracts, production targets, and success criteria live in [`OPERATING-PLAN.md`](OPERATING-PLAN.md). This file is the runtime architecture; that file is the cluster operating plan.
++
+ ```text
+ Telegram DM / Hermes Desktop / CLI
+                 |
